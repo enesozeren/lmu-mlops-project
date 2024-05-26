@@ -29,6 +29,8 @@ dependencies:
   - c-ares=1.28.1=hd590300_0
   - ca-certificates=2024.2.2=hbcca054_0
   - certifi=2024.2.2=pyhd8ed1ab_0
+  - cffi=1.16.0=py312hf06ca03_0
+  - cfgv=3.3.1=pyhd8ed1ab_0
   - chardet=5.2.0=py312h7900ff3_1
   - charset-normalizer=3.3.2=pyhd8ed1ab_0
   - click=8.1.7=unix_pyh707e725_0
@@ -37,6 +39,7 @@ dependencies:
   - cpuonly=2.0=0
   - datasets=2.19.1=pyhd8ed1ab_0
   - dill=0.3.8=pyhd8ed1ab_0
+  - distlib=0.3.8=pyhd8ed1ab_0
   - ffmpeg=4.3=hf484d3e_0
   - filelock=3.14.0=pyhd8ed1ab_0
   - freetype=2.12.1=h267a509_2
@@ -49,6 +52,7 @@ dependencies:
   - gnutls=3.6.13=h85f3911_1
   - huggingface_hub=0.23.0=pyhd8ed1ab_0
   - icu=73.2=h59595ed_0
+  - identify=2.5.36=pyhd8ed1ab_0
   - idna=3.7=pyhd8ed1ab_0
   - jinja2=3.1.4=pyhd8ed1ab_0
   - keyutils=1.6.1=h166bdaf_0
@@ -119,6 +123,7 @@ dependencies:
   - ncurses=6.5=h59595ed_0
   - nettle=3.6=he412f7d_0
   - networkx=3.3=pyhd8ed1ab_1
+  - nodeenv=1.8.0=pyhd8ed1ab_0
   - numpy=1.26.4=py312heda63a1_0
   - openh264=2.1.1=h780b84a_0
   - openjpeg=2.5.2=h488ebb8_0
@@ -128,10 +133,13 @@ dependencies:
   - pandas=2.2.2=py312h1d6d2e6_1
   - pillow=10.3.0=py312hdcec9eb_0
   - pip=24.0=pyhd8ed1ab_0
+  - platformdirs=4.2.2=pyhd8ed1ab_0
+  - pre-commit=3.7.1=pyha770c72_0
   - pthread-stubs=0.4=h36c2ea0_1001
   - pyarrow=16.1.0=py312h8da182e_1
   - pyarrow-core=16.1.0=py312h5429d62_1_cpu
   - pyarrow-hotfix=0.6=pyhd8ed1ab_0
+  - pycparser=2.22=pyhd8ed1ab_0
   - pygments=2.18.0=pyhd8ed1ab_0
   - pysocks=1.7.1=pyha2e5f31_6
   - python=3.12.3=hab00c5b_0_cpython
@@ -168,7 +176,9 @@ dependencies:
   - typing-extensions=4.11.0=hd8ed1ab_0
   - typing_extensions=4.11.0=pyha770c72_0
   - tzdata=2024a=h0c530f3_0
+  - ukkonen=1.0.1=py312h8572e83_4
   - urllib3=2.2.1=pyhd8ed1ab_0
+  - virtualenv=20.26.2=pyhd8ed1ab_0
   - wheel=0.43.0=pyhd8ed1ab_1
   - xorg-libxau=1.0.11=hd590300_0
   - xorg-libxdmcp=1.1.3=h7f98852_0

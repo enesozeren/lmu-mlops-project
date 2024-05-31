@@ -40,9 +40,13 @@ clean:
 # PROJECT RULES                                                                 #
 #################################################################################
 
+## Get the raw data
+raw_data:
+	python $(PROJECT_NAME)/data/make_raw_dataset.py
+
 ## Process raw data into processed data
-data:
-	python $(PROJECT_NAME)/data/make_dataset.py
+processed_data:
+	python $(PROJECT_NAME)/data/make_processed_dataset.py
 
 #################################################################################
 # Documentation RULES                                                           #

@@ -71,3 +71,4 @@ xxhash
 yarl
 kaggle==1.6.14
 pytest==8.2.1
+bs4==4.12.3

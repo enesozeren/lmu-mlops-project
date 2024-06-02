@@ -188,4 +188,3 @@ dependencies:
   - yarl=1.9.4=py312h98912ed_0
   - zlib=1.2.13=hd590300_5
   - zstd=1.5.6=ha6fb4c9_0
-prefix: /home/daniel/miniforge3/envs/mlops

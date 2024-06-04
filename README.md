@@ -17,5 +17,5 @@ Currently large language models has the state-of-the-art results for most NLP ta
 
 To get the dataset, use 
 ```bash
-    dvc pull
+dvc pull
 ```

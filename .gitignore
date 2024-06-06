@@ -1,3 +1,6 @@
+# data
+data/raw/*.txt
+
 docs/site/
 
 # test cache

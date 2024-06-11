@@ -1,6 +1,13 @@
 # data
 data/raw/*.txt
 
+# outputs
+outputs/predictions/*.pt
+
+# Models
+mlops_project/models/*.pth
+
+# Docs
 docs/site/
 
 # test cache

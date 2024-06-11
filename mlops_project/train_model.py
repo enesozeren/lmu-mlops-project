@@ -158,7 +158,8 @@ for epoch in range(epochs):
     val_preds = np.array(val_preds) 
 
 # Save model
-torch.save(model.state_dict(), 'weights_config01.pth')
+MODEL_PATH = 'mlops_project/models/weights_config01.pth'
+torch.save(model.state_dict(), MODEL_PATH)
 
 
 ##################

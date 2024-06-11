@@ -19,3 +19,10 @@ To get the dataset, use
 ```bash
 dvc pull
 ```
+
+Predictions from this script are saved to outputs directory. To make a prediction, use
+```bash
+ python mlops_project/predict_model.py \
+ --model_path=/your/model/path.txt \
+ --dataset_path=/your/data/path.txt
+```

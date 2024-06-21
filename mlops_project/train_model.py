@@ -195,7 +195,7 @@ for epoch in range(epochs):
     val_preds = np.array(val_preds) 
 
 # Save model
-filename = f'batch_size_{batch_size}_epochs_{epochs}_weights.pth'
+filename = "bsc_weights.pth" #f'batch_size_{batch_size}_epochs_{epochs}_weights.pth'
 model_path = os.path.join('mlops_project', 'models', 'saved_models', filename)
 torch.save(model.state_dict(), model_path)
 

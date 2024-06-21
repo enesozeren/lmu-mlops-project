@@ -1,8 +1,9 @@
 import numpy as np
 
-def _read_dataset(tweets_file, labels_file):
+def read_dataset(tweets_file, labels_file=None):
     '''
     Read the tweets and labels from the given files
+    If labels_file is None, return only the tweets
     Returns a tuple of lists in the following order: (tweets, labels)
     '''
 
@@ -10,10 +11,14 @@ def _read_dataset(tweets_file, labels_file):
     with open(tweets_file, 'r') as f:
         tweets = f.readlines()
 
+    tweets = [tweet.strip() for tweet in tweets]
+
+    if labels_file is None:
+        return tweets, None
+    
     with open(labels_file, 'r') as f:
         labels = f.readlines()
 
-    tweets = [tweet.strip() for tweet in tweets]
     labels = [int(label.strip()) for label in labels]
 
     return tweets, labels
@@ -26,9 +31,9 @@ def get_datasets():
     '''
 
     # Load train, validation, and test datasets
-    train_tweets, train_labels = _read_dataset('data/raw/train_text.txt', 'data/raw/train_labels.txt')
-    val_tweets, val_labels = _read_dataset('data/raw/val_text.txt', 'data/raw/val_labels.txt')
-    test_tweets, test_labels = _read_dataset('data/raw/test_text.txt', 'data/raw/test_labels.txt')
+    train_tweets, train_labels = read_dataset('data/raw/train_text.txt', 'data/raw/train_labels.txt')
+    val_tweets, val_labels = read_dataset('data/raw/val_text.txt', 'data/raw/val_labels.txt')
+    test_tweets, test_labels = read_dataset('data/raw/test_text.txt', 'data/raw/test_labels.txt')
 
     return (train_tweets, train_labels), (val_tweets, val_labels), (test_tweets, test_labels)
 

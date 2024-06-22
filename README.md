@@ -22,7 +22,22 @@ dvc pull
 
 Predictions from this script are saved to outputs directory. To make a prediction, use
 ```bash
- python mlops_project/predict_model.py \
- --model_path=/your/model/path.txt \
- --dataset_path=/your/data/path.txt
+python mlops_project/predict_model.py \
+--model_path=/your/model/path.txt \
+--dataset_path=/your/data/path.txt
+```
+
+To run the inference api, use
+```bash
+uvicorn --port 8000 api.main:app
+```
+
+To build the docker image for inference api, use
+```bash
+docker build -f dockerfiles/inference_api.dockerfile . -t inference_api:latest
+```
+
+To run the docker image for inference api, use
+```bash
+docker run -it -p 80:80 inference_api:latest
 ```

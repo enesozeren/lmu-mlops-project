@@ -4,6 +4,8 @@ from contextlib import asynccontextmanager
 import torch
 from transformers import BertForSequenceClassification, BertTokenizer
 
+MODEL_PATH = "mlops_project/models/saved_models/bsc_weights.pth"
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Load and clean up model on startup and shutdown."""
@@ -11,7 +13,7 @@ async def lifespan(app: FastAPI):
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
     # Get the model from the saved checkpoint
-    MODEL_PATH = "mlops_project/models/weights_config01.pth"
+    
     model = BertForSequenceClassification.from_pretrained(
         "bert-base-uncased",
         num_labels=2,

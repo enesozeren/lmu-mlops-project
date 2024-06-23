@@ -1,6 +1,53 @@
 outs:
-- md5: 6132ac5f375c042c01a5a92b66ce18cc.dir
-  size: 1703225
-  nfiles: 7
-  hash: md5
+- hash: md5
   path: raw
+  files:
+  - relpath: mapping.txt
+    md5: 40135225166b334bffc53c5ae5993437
+    size: 17
+    cloud:
+      gcloud:
+        etag: 0896b7b1a1e5f286031001
+        version_id: '1719182331501462'
+  - relpath: test_labels.txt
+    md5: eef78e14b5af0d38bb763304235164cc
+    size: 5940
+    cloud:
+      gcloud:
+        etag: 0888d6b1a1e5f286031001
+        version_id: '1719182331505416'
+  - relpath: test_text.txt
+    md5: a197093adb23a164e219000c19e5e1f0
+    size: 399242
+    cloud:
+      gcloud:
+        etag: 088792d4a1e5f286031001
+        version_id: '1719182332070151'
+  - relpath: train_labels.txt
+    md5: 0dcbe35432e20538cb1476d4b863801b
+    size: 18000
+    cloud:
+      gcloud:
+        etag: 08a2a4b2a1e5f286031001
+        version_id: '1719182331515426'
+  - relpath: train_text.txt
+    md5: 7f6e1285b696f9d5e0a9e273eadd6803
+    size: 1133852
+    cloud:
+      gcloud:
+        etag: 08e1a6dfa1e5f286031001
+        version_id: '1719182332253025'
+  - relpath: val_labels.txt
+    md5: bea1e1b7e9d676711dfde4c27d7dfd1a
+    size: 2000
+    cloud:
+      gcloud:
+        etag: 0884b0b2a1e5f286031001
+        version_id: '1719182331516932'
+  - relpath: val_text.txt
+    md5: 262405a6adfeee5c5149fc71456c4bb5
+    size: 144174
+    cloud:
+      gcloud:
+        etag: 08c59fb4a1e5f286031001
+        version_id: '1719182331547589'

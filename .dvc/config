@@ -1,4 +1,5 @@
 [core]
-    remote = storage
-['remote "storage"']
-    url = gdrive://1gGNebV7HR1gmaMQXevIvhT5nVwA2PlYp
+    remote = gcloud
+['remote "gcloud"']
+    url = gs://data_bucket_lmu/
+    version_aware = true

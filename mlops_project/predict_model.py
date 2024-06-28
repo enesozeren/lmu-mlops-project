@@ -1,7 +1,7 @@
 import torch
 import argparse
 from transformers import BertForSequenceClassification, BertTokenizer
-from mlops_project.data.utils import read_dataset
+from utils.utils_functions import read_dataset
 from datetime import datetime
 
 def predict(model_path: str, dataset_path: str) -> None:

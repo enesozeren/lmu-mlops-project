@@ -36,7 +36,6 @@ jobs:
         gsutil ls gs://data_bucket_lmu/
 
     - name: Get data
-      env:
       run: dvc pull -r gcloud
 
     - name: Test with pytest

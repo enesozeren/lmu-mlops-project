@@ -26,14 +26,15 @@ jobs:
         pip install -r requirements.txt
     - uses: iterative/setup-dvc@v1
 
-    - name: Authenticate to GCP
-      env:
-        GCP_BUCKET_ACCOUNT_KEY: ${{ secrets.GCP_BUCKET_ACCOUNT_KEY }}
-      run: |
-        echo "$GCP_BUCKET_ACCOUNT_KEY" > $HOME/gcloud.json
-        gcloud auth activate-service-account --key-file=$HOME/gcloud.json
-        gcloud config set project lmumlops
-        echo gsutil ls gs://data_bucket_lmu/
+    - name: Auth with GCP
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_BUCKET_ACCOUNT_KEY }}
+
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+      with:
+        project_id: lmumlops
 
     - name: Get data
       run: dvc pull -r gcloud

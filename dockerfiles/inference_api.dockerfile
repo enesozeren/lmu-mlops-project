@@ -1,5 +1,5 @@
 # Base image
-FROM python:3.12.3-slim
+FROM python:3.12-slim
 
 # install gcc and python3-dev
 RUN apt-get update && apt-get install -y \
@@ -19,8 +19,8 @@ WORKDIR /
 # Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt --no-cache-dir
 
-# Make port 80 available to the world outside this container
-EXPOSE 80
+# Make port available to the world outside this container
+EXPOSE $PORT
 
-# Run the command to start uWSGI
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "80"]
+# Run the command to start uWSGI with the specified port and host
+CMD exec uvicorn api.main:app --port $PORT --host 0.0.0.0

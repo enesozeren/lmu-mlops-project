@@ -18,7 +18,7 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.12.3
-        # cache: 'pip' # caching pip dependencies
+        cache: 'pip' # caching pip dependencies
 
     - name: Install dependencies
       run: |
@@ -33,7 +33,7 @@ jobs:
         echo "$GCP_BUCKET_ACCOUNT_KEY" > $HOME/gcloud.json
         gcloud auth activate-service-account --key-file=$HOME/gcloud.json
         gcloud config set project lmumlops
-        gsutil ls gs://data_bucket_lmu/
+        echo gsutil ls gs://data_bucket_lmu/
 
     - name: Get data
       run: dvc pull -r gcloud

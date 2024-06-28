@@ -33,10 +33,10 @@ jobs:
         echo "$GCP_BUCKET_ACCOUNT_KEY" > $HOME/gcloud.json
         gcloud auth activate-service-account --key-file=$HOME/gcloud.json
         gcloud config set project lmumlops
+        gsutil ls gs://data_bucket_lmu/
 
     - name: Get data
       env:
-        GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcloud.json
       run: dvc pull -r gcloud
 
     - name: Test with pytest

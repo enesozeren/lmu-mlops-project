@@ -23,19 +23,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - uses: iterative/setup-dvc@v1
-
-    - name: Authenticate to GCP
-      env:
-        GCP_BUCKET_ACCOUNT_KEY: ${{ secrets.GCP_BUCKET_ACCOUNT_KEY }}
-      run: |
-        echo "$GCP_BUCKET_ACCOUNT_KEY" > $HOME/gcloud.json
-        gcloud auth activate-service-account --key-file=$HOME/gcloud.json
-        gcloud config set project lmumlops
-        dvc remote modify gcloud --local gdrive_service_account_json_file $HOME/gcloud.json
-
     - name: Get data
-      run: dvc pull -r gcloud
-
+      run: dvc pull
+      env:
+        GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
     - name: Test with pytest
       run: |
         pytest -v

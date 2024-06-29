@@ -15,7 +15,7 @@ Currently large language models has the state-of-the-art results for most NLP ta
 
 # Repository
 
-To get the dataset, use 
+To get the dataset, use
 ```bash
 dvc pull
 ```
@@ -36,8 +36,12 @@ To build the docker image for inference api, use
 ```bash
 docker build -f dockerfiles/inference_api.dockerfile . -t inference_api:latest
 ```
+To make sure your image has amd64 architecture (necessary for google cloud), you can use:
+```bash
+docker buildx build --platform linux/amd64 -f dockerfiles/inference_api.dockerfile . -t inference_api:latest
+```
 
 To run the docker image for inference api, use
 ```bash
-docker run -it -p 80:80 inference_api:latest
+docker run -p 8080:8080 -e PORT=8080 inference_api:latest
 ```

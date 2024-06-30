@@ -3,22 +3,21 @@ from http import HTTPStatus
 from contextlib import asynccontextmanager
 import torch
 from transformers import BertForSequenceClassification, BertTokenizer
+import os
 
-MODEL_PATH = "mlops_project/models/saved_models/bsc_weights.pth"
+MODEL_PATH = os.path.join("mlops_project", "models", "saved_models", "bsc_weights.pth")
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Load and clean up model on startup and shutdown."""
     # Load the tokenizer
-    tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+    tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 
     # Get the model from the saved checkpoint
-    
+
     model = BertForSequenceClassification.from_pretrained(
-        "bert-base-uncased",
-        num_labels=2,
-        output_attentions=False,
-        output_hidden_states=False
+        "bert-base-uncased", num_labels=2, output_attentions=False, output_hidden_states=False
     )
     model.load_state_dict(torch.load(MODEL_PATH))
     model.eval()
@@ -38,11 +37,14 @@ async def lifespan(app: FastAPI):
     del tokenizer
     print("Model cleaned up! Goodbye!")
 
+
 app = FastAPI(lifespan=lifespan)
+
 
 @app.get("/")
 async def root():
     return {"message": "Welcome to the Hate Speech Detection model API!"}
+
 
 @app.post("/predict_labels_one_tweet")
 async def predict_labels_one_tweet(tweet: str):
@@ -73,6 +75,7 @@ async def predict_labels_one_tweet(tweet: str):
     label = "not-hate" if label == 0 else "hate"
 
     return label
+
 
 @app.post("/predict_labels_tweets_file")
 async def predict_labels_tweets_file(file: UploadFile = File(...)):

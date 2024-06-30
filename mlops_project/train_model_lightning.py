@@ -113,6 +113,7 @@ class HatespeechModel(LightningModule):
         b_specificity = tn / (tn + fp) if (tn + fp) > 0 else "nan"
         return b_accuracy, b_precision, b_recall, b_specificity
 
+    # TODO: Do wee need a forward pass? output vs outputs in training_step
     def forward(self, input_ids, attention_mask, labels=None):
         output = self.model(input_ids, attention_mask=attention_mask, labels=labels)
         return output
@@ -121,9 +122,11 @@ class HatespeechModel(LightningModule):
         input_ids, attention_mask, labels = batch  # input_itds represents token IDs
         outputs = self(input_ids, attention_mask, labels=labels)  # model forward pass
         loss = outputs.loss  # TODO: Is outputs an object that contains loss as attribute?
-        self.log("train_loss", loss)
+        self.log("train_loss", loss, on_epoch=True, prog_bar=True)
         # TODO: add train accuracy
         return loss
+
+    # TODO: implement def on_train_epoch_end(self): ... ?
 
     def validation_step(self, batch):
         input_ids, attention_mask, labels = batch

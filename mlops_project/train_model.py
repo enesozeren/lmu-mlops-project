@@ -1,4 +1,4 @@
-# import os
+import os
 import logging
 from data.utils import get_datasets, preprocessing, b_metrics
 from transformers import BertForSequenceClassification, BertTokenizer
@@ -192,61 +192,6 @@ for epoch in range(epochs):
     val_preds = np.array(val_preds)
 
 # Save model
-# filename = "bsc_weights.pth" #f'batch_size_{batch_size}_epochs_{epochs}_weights.pth'
-# model_path = os.path.join('mlops_project', 'models', 'saved_models', filename)
-# torch.save(model.state_dict(), model_path)
-
-
-##################
-### Test model ###
-##################
-# token_id_test = []
-# attention_masks_test = []
-#
-# for sample in test_tweets:
-#    encoding_dict = preprocessing(sample, tokenizer)
-#    token_id_test.append(encoding_dict['input_ids'])
-#    attention_masks_test.append(encoding_dict['attention_mask'])
-#
-# token_id_test = torch.cat(token_id_test, dim=0)
-# attention_masks_test = torch.cat(attention_masks_test, dim=0)
-# labels_test = torch.tensor(test_labels)
-#
-# test_set = TensorDataset(token_id_test, attention_masks_test, labels_test)
-#
-# test_dataloader = DataLoader(
-#    test_set,
-#    sampler=SequentialSampler(test_set),
-#    batch_size=batch_size
-# )
-#
-##model.load_state_dict(torch.load('weights_config01.pth'))
-# model.eval()
-# test_accuracy = []
-# test_precision = []
-# test_recall = []
-# test_specificity = []
-#
-# for batch in tqdm(test_dataloader, desc="Testing: "):
-#    batch = tuple(t.to(device) for t in batch)
-#    b_input_ids, b_input_mask, b_labels = batch
-#    with torch.no_grad():
-#        # Forward pass
-#        eval_output = model(b_input_ids, token_type_ids=None, attention_mask=b_input_mask)
-#    logits = eval_output.logits.detach().cpu().numpy()
-#    label_ids = b_labels.to('cpu').numpy()
-#
-#    # Calculate evaluation metrics
-#    b_accuracy, b_precision, b_recall, b_specificity = b_metrics(logits, label_ids)
-#    test_accuracy.append(b_accuracy)
-#    # Update precision only when (tp + fp) !=0; ignore nan
-#    if b_precision != 'nan': test_precision.append(b_precision)
-#    # Update recall only when (tp + fn) !=0; ignore nan
-#    if b_recall != 'nan': test_recall.append(b_recall)
-#    # Update specificity only when (tn + fp) !=0; ignore nan
-#    if b_specificity != 'nan': test_specificity.append(b_specificity)
-#
-# print('\n\t - Test Accuracy: {:.4f}'.format(sum(test_accuracy)/len(test_accuracy)))
-# print('\t - Test Precision: {:.4f}'.format(sum(test_precision)/len(test_precision)) if len(test_precision)>0 else '\t - Test Precision: NaN')
-# print('\t - Test Recall: {:.4f}'.format(sum(test_recall)/len(test_recall)) if len(test_recall)>0 else '\t - Test Recall: NaN')
-# print('\t - Test Specificity: {:.4f}\n'.format(sum(test_specificity)/len(test_specificity)) if len(test_specificity)>0 else '\t - Test Specificity: NaN')
+filename = "bsc_weights.pth"  # f'batch_size_{batch_size}_epochs_{epochs}_weights.pth'
+model_path = os.path.join("mlops_project", "models", "saved_models", filename)
+torch.save(model.state_dict(), model_path)

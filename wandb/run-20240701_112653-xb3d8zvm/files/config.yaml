@@ -1,0 +1,74 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    python_version: 3.12.4
+    cli_version: 0.17.3
+    framework: huggingface
+    huggingface_version: 4.41.2
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1719826013
+    t:
+      1:
+      - 1
+      - 9
+      - 11
+      - 49
+      - 50
+      - 55
+      - 103
+      - 105
+      2:
+      - 1
+      - 9
+      - 11
+      - 49
+      - 50
+      - 55
+      - 103
+      - 105
+      3:
+      - 7
+      - 23
+      - 66
+      4: 3.12.4
+      5: 0.17.3
+      6: 4.41.2
+      8:
+      - 4
+      - 5
+      13: darwin-arm64
+    m:
+    - 1: trainer/global_step
+      6:
+      - 3
+    - 1: val_loss
+      5: 1
+      6:
+      - 1
+    - 1: val_accuracy
+      5: 1
+      6:
+      - 1
+    - 1: val_precision
+      5: 1
+      6:
+      - 1
+    - 1: val_recall
+      5: 1
+      6:
+      - 1
+    - 1: val_specificity
+      5: 1
+      6:
+      - 1
+    - 1: epoch
+      5: 1
+      6:
+      - 1
+    - 1: train_loss_epoch
+      5: 1
+      6:
+      - 1

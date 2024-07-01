@@ -2,7 +2,8 @@
 import numpy as np
 from pytorch_lightning import LightningModule, Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint
-from pytorch_lightning.loggers import WandbLogger
+
+# from pytorch_lightning.loggers import WandbLogger
 import torch
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
 from transformers import BertForSequenceClassification, BertTokenizer
@@ -165,11 +166,11 @@ checkpoint_callback = ModelCheckpoint(
 ################
 ### Training ###
 ################
-wandb_logger = WandbLogger(project="hatespeech_detection", job_type="train")
+# wandb_logger = WandbLogger(project="hatespeech_detection", job_type="train")
 
 # TODO: progress bar, gpu accelaration dynamically
 trainer = Trainer(
-    logger=wandb_logger,
+    # logger=wandb_logger,
     max_epochs=epochs,
     # gpus=1 if torch.cuda.is_available() else 0,
     devices=1,

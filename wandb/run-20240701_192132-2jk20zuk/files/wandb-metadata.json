@@ -1,0 +1,52 @@
+{
+    "os": "macOS-14.5-arm64-arm-64bit",
+    "python": "3.12.4",
+    "heartbeatAt": "2024-07-01T17:21:33.815766",
+    "startedAt": "2024-07-01T17:21:32.686821",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "-p",
+        "vscode_pytest",
+        "--collect-only"
+    ],
+    "state": "running",
+    "program": "-m pytest.__main__",
+    "codePathLocal": null,
+    "git": {
+        "remote": "https://github.com/enesozeren/lmu-mlops-project.git",
+        "commit": "1c9df5628522a824b05878a8780c48faf2893e30"
+    },
+    "email": "julia-broden@t-online.de",
+    "root": "/Users/julia/Desktop/SoSe24/ML_Ops/lmu-mlops-project",
+    "host": "Julias-MBP.fritz.box",
+    "username": "julia",
+    "executable": "/opt/anaconda3/envs/mlops_project/bin/python",
+    "cpu_count": 10,
+    "cpu_count_logical": 10,
+    "cpu_freq": {
+        "current": 3228,
+        "min": 600,
+        "max": 3228
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 3228,
+            "min": 600,
+            "max": 3228
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 460.4317207336426,
+            "used": 9.559967041015625
+        }
+    },
+    "gpuapple": {
+        "type": "Apple M1 Pro",
+        "vendor": "sppci_vendor_Apple"
+    },
+    "memory": {
+        "total": 16.0
+    }
+}

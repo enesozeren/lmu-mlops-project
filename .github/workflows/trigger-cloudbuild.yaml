@@ -1,14 +1,12 @@
 name: "Trigger cloudbuild"
 on:
-  workflow_run:
-    workflows: [Unit tests]
+  pull_request:
     types:
-      - completed
+      - closed
 
 jobs:
   cloudbuild:
-    if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
-    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

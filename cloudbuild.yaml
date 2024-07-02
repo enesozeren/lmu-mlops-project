@@ -1,0 +1,57 @@
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    id: "Build train container image"
+    args:
+      [
+        "build",
+        ".",
+        "-t",
+        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeechapi/train-model",
+        "-f",
+        "dockerfiles/train_model.dockerfile",
+      ]
+  - name: "gcr.io/cloud-builders/docker"
+    id: "Push train container image"
+    args:
+      [
+        "push",
+        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeechapi/train-model",
+      ]
+
+  - name: "gcr.io/cloud-builders/docker"
+    id: "Build inference container image"
+    args:
+      [
+        "build",
+        ".",
+        "-t",
+        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeechapi/inference-api",
+        "-f",
+        "dockerfiles/inference_api.dockerfile",
+      ]
+  - name: "gcr.io/cloud-builders/docker"
+    id: "Push inference container image"
+    args:
+      [
+        "push",
+        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeechapi/inference-api",
+      ]
+
+  - name: "gcr.io/cloud-builders/docker"
+    id: "Build predict container image"
+    args:
+      [
+        "build",
+        ".",
+        "-t",
+        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeechapi/predict-model",
+        "-f",
+        "dockerfiles/predict_model.dockerfile",
+      ]
+  - name: "gcr.io/cloud-builders/docker"
+    id: "Push predict container image"
+    args:
+      [
+        "push",
+        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeechapi/predict-model",
+      ]

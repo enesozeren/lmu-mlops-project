@@ -8,16 +8,19 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the necessary files
+
+
+# Install any needed packages specified in requirements.txt
 COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt --no-cache-dir
+
+# Copy the necessary files
 COPY api/ api/
 COPY mlops_project/models mlops_project/models
 
 # Set the working directory
 WORKDIR /
 
-# Install any needed packages specified in requirements.txt
-RUN pip install -r requirements.txt --no-cache-dir
 
 # Make port available to the world outside this container
 EXPOSE $PORT

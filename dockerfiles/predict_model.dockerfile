@@ -9,6 +9,8 @@ RUN apt update && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt --no-cache-dir
+
 COPY pyproject.toml pyproject.toml
 COPY data/ data/
 COPY mlops_project/ mlops_project/
@@ -19,7 +21,6 @@ COPY outputs/ outputs/
 ENV PYTHONPATH=/lmu-mlops-project
 
 # Do not set the directory to root
-RUN pip install -r requirements.txt --no-cache-dir
 RUN pip install . --no-deps --no-cache-dir
 
 ENTRYPOINT ["python", "-u", "mlops_project/predict_model.py", \

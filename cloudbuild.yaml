@@ -1,4 +1,18 @@
 steps:
+  - id: get-git-history
+    name: gcr.io/cloud-builders/git
+    entrypoint: bash
+    args:
+      - "-c"
+      - |
+        git clone https://github.com/enesozeren/lmu-mlops-project.git --no-checkout
+        mv lmu-mlops-project/.git .
+        git fetch --unshallow
+        rm -rf lmu-mlops-project
+  - name: python:slim
+    entrypoint: bash
+    args: ["-c", "pip install -U dvc dvc[gs]; dvc pull;"]
+    id: Model_Pull
   - name: "gcr.io/cloud-builders/docker"
     id: "Build train container image"
     args:

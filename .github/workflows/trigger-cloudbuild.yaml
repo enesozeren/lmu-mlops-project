@@ -1,0 +1,27 @@
+name: "Trigger cloudbuild"
+on:
+  workflow_run:
+    workflows: [Unit tests]
+    types:
+      - completed
+
+jobs:
+  cloudbuild:
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Auth with GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_BUCKET_ACCOUNT_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: lmumlops
+
+      - name: Submit build
+        run: gcloud builds submit --config cloudbuild.yaml

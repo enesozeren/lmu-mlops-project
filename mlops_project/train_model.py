@@ -32,8 +32,8 @@ trainer = Trainer(
     precision="16-mixed",
     devices=1,  # computations in 16-bit to speed up training, model weights in 32-bit to maintain accuracy
     max_epochs=EPOCHS,
-    limit_train_batches=0.05,
-    limit_val_batches=0.05,
+    limit_train_batches=0.04,
+    limit_val_batches=0.04,
     logger=WandbLogger(project="hate_speech_detection"),
     # devices=1,
     # accelerator="gpu",

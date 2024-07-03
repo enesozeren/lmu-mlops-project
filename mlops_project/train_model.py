@@ -8,7 +8,7 @@ from hate_speech_model import HatespeechModel
 # Hyperparameters
 # RANDOM_SEED = 76
 BATCH_SIZE = 32
-EPOCHS = 4
+EPOCHS = 2
 
 # Get the training, validation, and test datasets
 (train_tweets, train_labels), (val_tweets, val_labels), (test_tweets, test_labels) = get_datasets()

@@ -1,5 +1,6 @@
 from pytorch_lightning import LightningModule
 import torch
+from torchmetrics.classification import Accuracy, Precision  # , Recall
 from transformers import BertForSequenceClassification
 
 
@@ -13,8 +14,10 @@ class HatespeechModel(LightningModule):
             output_hidden_states=False,
         )
         self.criterion = torch.nn.CrossEntropyLoss()
+        self.train_acc = Accuracy(task="binary")
+        self.val_acc = Accuracy(task="binary")
+        self.val_prec = Precision(task="binary")
 
-    # TODO: output vs outputs in training_step
     def forward(self, input_ids, attention_mask, labels=None):
         outputs = self.model(input_ids, attention_mask=attention_mask, labels=labels)
         logits = outputs.logits
@@ -24,8 +27,12 @@ class HatespeechModel(LightningModule):
         input_ids, attention_mask, labels = batch  # input_itds represents token IDs
         logits = self(input_ids, attention_mask)  # model forward pass
         loss = self.criterion(logits, labels)
-        self.log("train_loss", loss)  # , on_epoch=True, on_step=False, prog_bar=True
-        # TODO: add train accuracy
+        self.log("train_loss", loss, on_step=False, on_epoch=True)
+
+        # Training accuracy
+        preds = torch.argmax(logits, dim=1)  # TODO: dim 0 or 1?
+        self.train_acc(preds, labels)
+        self.log("train_acc", self.train_acc, on_step=False, on_epoch=True)
         return loss
 
     def validation_step(self, batch):
@@ -33,8 +40,13 @@ class HatespeechModel(LightningModule):
         logits = self(input_ids, attention_mask)
         val_loss = self.criterion(logits, labels)
         self.log("val_loss", val_loss)
-        # self.log("val_accuracy")
-        # TODO: check if accuracy is for batch or for whole dataset/one epoch
+
+        # Validation metrics
+        preds = torch.argmax(logits, dim=1)  # TODO: dim 0 or 1?
+        self.val_acc(preds, labels)
+        self.log("val_acc", self.val_acc, on_step=False, on_epoch=True)
+        self.val_prec(preds, labels)
+        self.log("val_prec", self.val_prec, on_step=False, on_epoch=True)
         return val_loss
 
     def configure_optimizers(self):

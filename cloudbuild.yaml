@@ -20,7 +20,7 @@ steps:
         "build",
         ".",
         "-t",
-        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeechapi/train-model",
+        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeech-detection-docker-repo/train-model",
         "-f",
         "dockerfiles/train_model.dockerfile",
       ]
@@ -29,27 +29,41 @@ steps:
     args:
       [
         "push",
-        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeechapi/train-model",
+        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeech-detection-docker-repo/train-model",
       ]
 
   - name: "gcr.io/cloud-builders/docker"
-    id: "Build inference container image"
+    id: "Build inference api container image"
     args:
       [
         "build",
         ".",
         "-t",
-        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeechapi/inference-api",
+        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeech-detection-docker-repo/inference-api",
         "-f",
         "dockerfiles/inference_api.dockerfile",
       ]
   - name: "gcr.io/cloud-builders/docker"
-    id: "Push inference container image"
+    id: "Push inference api container image"
     args:
       [
         "push",
-        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeechapi/inference-api",
+        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeech-detection-docker-repo/inference-api",
       ]
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: 'Deploy inference api docker container to Cloud Run'
+    args: [
+      'run',
+      'deploy',
+      'hate-speech-detection-cloudrun-api',
+      '--image',
+      'europe-west1-docker.pkg.dev/lmumlops/hatespeech-detection-docker-repo/inference-api:latest',
+      '--region',
+      'europe-west3',
+      '--platform',
+      'managed',
+    ]
 
   - name: "gcr.io/cloud-builders/docker"
     id: "Build predict container image"
@@ -58,7 +72,7 @@ steps:
         "build",
         ".",
         "-t",
-        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeechapi/predict-model",
+        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeech-detection-docker-repo/predict-model",
         "-f",
         "dockerfiles/predict_model.dockerfile",
       ]
@@ -67,5 +81,5 @@ steps:
     args:
       [
         "push",
-        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeechapi/predict-model",
+        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeech-detection-docker-repo/predict-model",
       ]

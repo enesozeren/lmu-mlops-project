@@ -58,7 +58,7 @@ steps:
       'deploy',
       'hate-speech-detection-cloudrun-api',
       '--image',
-      'europe-west1-docker.pkg.dev/lmumlops/hatespeech-detection-docker-repo/inference-api:latest',
+      'europe-west3-docker.pkg.dev/lmumlops/hatespeech-detection-docker-repo/inference-api:latest',
       '--region',
       'europe-west3',
       '--platform',

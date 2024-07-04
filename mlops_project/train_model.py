@@ -2,14 +2,16 @@ from utils.utils_functions import get_datasets, tokenize_tweets
 import torch
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
-from pytorch_lightning import Trainer
+from pytorch_lightning import Trainer, seed_everything
 from pytorch_lightning.loggers import WandbLogger
 from hate_speech_model import HatespeechModel
 
 # Hyperparameters
-# RANDOM_SEED = 76
 BATCH_SIZE = 32
-EPOCHS = 2
+EPOCHS = 10
+
+# Reproducibility
+seed_everything(47, workers=True)
 
 # Get the training, validation, and test datasets
 (train_tweets, train_labels), (val_tweets, val_labels), (test_tweets, test_labels) = get_datasets()
@@ -40,9 +42,10 @@ trainer = Trainer(
     accelerator="auto",
     devices="auto",
     precision="16-mixed",  # computations in 16-bit to speed up training, model weights in 32-bit to maintain accuracy
+    deterministic=True,
     max_epochs=EPOCHS,
-    limit_train_batches=0.04,
-    limit_val_batches=0.04,
+    # limit_train_batches=0.04,
+    # limit_val_batches=0.04,
     logger=WandbLogger(project="hate_speech_detection"),
     callbacks=[checkpoint_callback, early_stopping_callback],
 )

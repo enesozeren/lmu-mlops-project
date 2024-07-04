@@ -1,3 +1,0 @@
-num_labels: 2
-learning_rate: 5.0e-05
-eps: 1.0e-08

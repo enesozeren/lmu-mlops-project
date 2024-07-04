@@ -1,6 +1,7 @@
 from utils.utils_functions import get_datasets, tokenize_tweets
 import torch
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
+from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 from pytorch_lightning import Trainer
 from pytorch_lightning.loggers import WandbLogger
 from hate_speech_model import HatespeechModel
@@ -26,17 +27,23 @@ train_dataloader = DataLoader(train_set, sampler=RandomSampler(train_set), batch
 validation_dataloader = DataLoader(val_set, sampler=SequentialSampler(val_set), batch_size=BATCH_SIZE)
 
 
-# Training
+# Train the model
 model = HatespeechModel()
+
+checkpoint_callback = ModelCheckpoint(
+    monitor="val_loss", dirpath="mlops_project/checkpoints", filename="best-checkpoint", save_top_k=1, mode="min"
+)
+
+early_stopping_callback = EarlyStopping(monitor="val_loss", patience=3, verbose=True, mode="min")
+
 trainer = Trainer(
-    precision="16-mixed",
-    devices=1,  # computations in 16-bit to speed up training, model weights in 32-bit to maintain accuracy
+    accelerator="auto",
+    devices="auto",
+    precision="16-mixed",  # computations in 16-bit to speed up training, model weights in 32-bit to maintain accuracy
     max_epochs=EPOCHS,
     limit_train_batches=0.04,
     limit_val_batches=0.04,
     logger=WandbLogger(project="hate_speech_detection"),
-    # devices=1,
-    # accelerator="gpu",
-    # callbacks=[checkpoint_callback],
+    callbacks=[checkpoint_callback, early_stopping_callback],
 )
 trainer.fit(model, train_dataloader, validation_dataloader)

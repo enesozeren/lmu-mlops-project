@@ -1,6 +1,6 @@
 from pytorch_lightning import LightningModule
 import torch
-from torchmetrics.classification import Accuracy, Precision  # , Recall
+from torchmetrics.classification import Accuracy, Precision, Recall, Specificity
 from transformers import BertForSequenceClassification
 
 
@@ -17,6 +17,8 @@ class HatespeechModel(LightningModule):
         self.train_acc = Accuracy(task="binary")
         self.val_acc = Accuracy(task="binary")
         self.val_prec = Precision(task="binary")
+        self.val_rec = Recall(task="binary")
+        self.val_spec = Specificity(task="binary")
 
     def forward(self, input_ids, attention_mask, labels=None):
         outputs = self.model(input_ids, attention_mask=attention_mask, labels=labels)
@@ -47,6 +49,10 @@ class HatespeechModel(LightningModule):
         self.log("val_acc", self.val_acc, on_step=False, on_epoch=True)
         self.val_prec(preds, labels)
         self.log("val_prec", self.val_prec, on_step=False, on_epoch=True)
+        self.val_rec(preds, labels)
+        self.log("val_rec", self.val_rec, on_step=False, on_epoch=True)
+        self.val_spec(preds, labels)
+        self.log("val_spec", self.val_spec, on_step=False, on_epoch=True)
         return val_loss
 
     def configure_optimizers(self):

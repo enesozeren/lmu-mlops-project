@@ -20,7 +20,6 @@ def test_training_step():
     model = HatespeechModel()
     loss = model.training_step(batch)
     # then
-    assert loss is not None
     assert isinstance(loss, torch.Tensor)
     # https://pytorch.org/docs/stable/testing.html
     # torch.testing.assert_close(loss.data, torch.tensor(0.6543))

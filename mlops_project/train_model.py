@@ -1,7 +1,7 @@
 from utils.utils_functions import get_datasets, tokenize_tweets
 import torch
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
-from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
+from pytorch_lightning.callbacks import ModelCheckpoint  # , EarlyStopping
 from pytorch_lightning import Trainer, seed_everything
 from pytorch_lightning.loggers import WandbLogger
 from hate_speech_model import HatespeechModel
@@ -36,7 +36,7 @@ checkpoint_callback = ModelCheckpoint(
     monitor="val_loss", dirpath="mlops_project/checkpoints", filename="best-checkpoint", save_top_k=1, mode="min"
 )
 
-early_stopping_callback = EarlyStopping(monitor="val_loss", patience=3, verbose=True, mode="min")
+# early_stopping_callback = EarlyStopping(monitor="val_loss", patience=3, verbose=True, mode="min")
 
 trainer = Trainer(
     accelerator="auto",
@@ -47,6 +47,6 @@ trainer = Trainer(
     # limit_train_batches=0.04,
     # limit_val_batches=0.04,
     logger=WandbLogger(project="hate_speech_detection"),
-    callbacks=[checkpoint_callback, early_stopping_callback],
+    callbacks=[checkpoint_callback],  # , early_stopping_callback
 )
 trainer.fit(model, train_dataloader, validation_dataloader)

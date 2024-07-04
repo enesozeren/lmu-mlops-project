@@ -21,7 +21,7 @@ steps:
         "build",
         ".",
         "-t",
-        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeechapi/hatespeech-base",
+        "hatepeech-base",
         "-f",
         "dockerfiles/hatespeech_base.dockerfile",
       ]

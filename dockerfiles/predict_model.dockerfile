@@ -1,5 +1,5 @@
 # Base image
-FROM europe-west3-docker.pkg.dev/lmumlops/hatespeechapi/hatespeech-base
+FROM hatespeech-base
 
 # Set the working directory in the container
 WORKDIR /lmu-mlops-project

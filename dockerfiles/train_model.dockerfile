@@ -1,5 +1,5 @@
 # Base image
-FROM europe-west3-docker.pkg.dev/lmumlops/hatespeechapi/hatespeech-base
+FROM hatespeech-base
 
 COPY pyproject.toml pyproject.toml
 COPY mlops_project/ mlops_project/

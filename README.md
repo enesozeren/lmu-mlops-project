@@ -15,11 +15,13 @@ Currently large language models has the state-of-the-art results for most NLP ta
 
 # Repository
 
+## Dataset
 To get the dataset, use
 ```bash
 dvc pull
 ```
 
+## Inference
 Predictions from this script are saved to outputs directory. To make a prediction, use
 ```bash
 python mlops_project/predict_model.py \
@@ -27,21 +29,45 @@ python mlops_project/predict_model.py \
 --dataset_path=/your/data/path.txt
 ```
 
-To run the inference api, use
+To run the inference api locally, use
 ```bash
 uvicorn --port 8000 api.main:app
+```
+
+## Training
+TBD
+
+## Docker
+
+### Building Docker Images
+
+Please first build the base docker image before building train / predict / inference api docker images
+```bash
+docker build -f dockerfiles/hatespeech_base.dockerfile . -t hatespeech-base:latest
 ```
 
 To build the docker image for inference api, use
 ```bash
 docker build -f dockerfiles/inference_api.dockerfile . -t inference_api:latest
 ```
-To make sure your image has amd64 architecture (necessary for google cloud), you can use:
+
+(OR) To make sure your image has amd64 architecture (necessary for google cloud), you can use:
 ```bash
 docker buildx build --platform linux/amd64 -f dockerfiles/inference_api.dockerfile . -t inference_api:latest
 ```
 
+### Running Docker Containers
+
 To run the docker image for inference api, use
 ```bash
 docker run -p 8080:8080 -e PORT=8080 inference_api:latest
+```
+
+You can also use the predict_model docker image by mounting with your machine for your model weights and dataset
+```bash
+docker run -v /home/user/models:/container/models \
+           -v /home/user/data:/container/data \
+           predict_model:latest \
+           --model_path /container/models/model.pth \
+           --dataset_path /container/data/test_text.txt
 ```

@@ -21,7 +21,7 @@ steps:
         "build",
         ".",
         "-t",
-        "hatepeech-base",
+        "hatespeech-base",
         "-f",
         "dockerfiles/hatespeech_base.dockerfile",
       ]

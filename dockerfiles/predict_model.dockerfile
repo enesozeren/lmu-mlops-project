@@ -1,15 +1,10 @@
 # Base image
-FROM python:3.12.3-slim
+FROM europe-west3-docker.pkg.dev/lmumlops/hatespeechapi/hatespeech-base
 
 # Set the working directory in the container
 WORKDIR /lmu-mlops-project
 
-RUN apt update && \
-    apt install --no-install-recommends -y build-essential gcc && \
-    apt clean && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt --no-cache-dir
 
 COPY pyproject.toml pyproject.toml
 COPY data/ data/

@@ -34,6 +34,19 @@ To run the inference api locally, use
 uvicorn --port 8000 api.main:app
 ```
 
+## Inference APIs
+To use the api served by Google Cloud Platform you can use the following link
+
+Welcome endpoint
+```bash
+https://hate-speech-detection-cloudrun-api-sjx4y77sda-ey.a.run.app
+```
+
+Prediction for one tweet end point
+```bash
+https://hate-speech-detection-cloudrun-api-sjx4y77sda-ey.a.run.app/predict_labels_one_tweet?tweet=this is my twwetttt
+```
+
 ## Training
 TBD
 
@@ -70,4 +83,13 @@ docker run -v /home/user/models:/container/models \
            predict_model:latest \
            --model_path /container/models/model.pth \
            --dataset_path /container/data/test_text.txt
+```
+
+## Tests
+
+Unit tests for this repo can be found in the ``tests/`` directory.
+
+To do the locust test for the api load test run the following command
+```bash
+locust -f tests/api_performance_locustfile.py
 ```

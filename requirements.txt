@@ -12,3 +12,5 @@ beautifulsoup4==4.12.3
 pytest==8.2.2
 pytorch-lightning==2.3.0
 wandb==0.17.3
+httpx == 0.27.0
+locust==2.29.1

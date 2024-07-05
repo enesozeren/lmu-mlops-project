@@ -32,11 +32,11 @@ def test_predict_labels_tweets_file():
     with TestClient(app) as client:
         # Create a file with tweets
         tweets = "I love you\nI hate you"
-        with open("test_file.txt", "w") as f:
+        with open("api_unittest_tweet_file.txt", "w") as f:
             f.write(tweets)
 
         # Post the file
-        with open("test_file.txt", "rb") as f:
+        with open("api_unittest_tweet_file.txt", "rb") as f:
             response = client.post("/predict_labels_tweets_file", files={"file": f})
 
         assert response.status_code == 200
@@ -46,4 +46,5 @@ def test_predict_labels_tweets_file():
         # Remove the file
         import os
 
-        os.remove("test_file.txt")
+        if os.path.exists("api_unittest_tweet_file.txt"):
+            os.remove("api_unittest_tweet_file.txt")

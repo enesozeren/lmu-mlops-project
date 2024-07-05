@@ -76,6 +76,9 @@ steps:
         "managed",
       ]
 
+options:
+  logging: CLOUD_LOGGING_ONLY
+
 images:
   - "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeech-detection-docker-repo/train-model"
   - "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeech-detection-docker-repo/inference-api"

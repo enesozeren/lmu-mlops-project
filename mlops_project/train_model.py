@@ -7,8 +7,8 @@ from pytorch_lightning.loggers import WandbLogger
 from hate_speech_model import HatespeechModel
 
 # Hyperparameters
-BATCH_SIZE = 32
-EPOCHS = 10
+BATCH_SIZE = 4 * 32
+EPOCHS = 20
 
 # Reproducibility
 seed_everything(47, workers=True)

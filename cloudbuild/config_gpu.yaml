@@ -1,0 +1,13 @@
+workerPoolSpecs:
+  machineSpec:
+    machineType: n1-standard-8
+    acceleratorType: NVIDIA_TESLA_T4
+    acceleratorCount: 1
+  replicaCount: 1
+  containerSpec:
+    imageUri: europe-west3-docker.pkg.dev/lmumlops/hatespeech-detection-docker-repo/train-model
+    env:
+      # - name: WANDB_API_KEY
+      #   value: $WANDB_API_KEY
+      - name: PJRT_DEVICE
+        value: GPU

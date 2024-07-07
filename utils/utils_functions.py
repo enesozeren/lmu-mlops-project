@@ -6,7 +6,7 @@ import torch
 def read_dataset(tweets_file, labels_file=None):
     """
     Read the tweets and labels from the given files
-    If labels_file is None, return only the tweets
+    If labels_file is None, returns tweets and None
     Returns a tuple of lists in the following order: (tweets, labels)
     """
 

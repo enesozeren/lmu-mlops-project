@@ -102,21 +102,16 @@ curriculum in this course. Therefore, we do not expect at all that you have chec
 
 ## Group information
 
-### Question 1 (ENES)
+### Question 1
 > **Enter the group number you signed up on <learn.inside.dtu.dk>**
 >
-> Answer:
+> Answer: NaN
 
---- question 1 fill here ---
 
 ### Question 2 (ALL)
 > **Enter the study number for each member in the group**
 >
-> Example:
->
-> *sXXXXXX, sXXXXXX, sXXXXXX*
->
-> Answer:
+> Answer: Enes Özeren (12788990)
 
 --- question 2 fill here ---
 
@@ -191,30 +186,17 @@ We used the third-party framework Transformers in our project. It provided multi
 
 > **How many tests did you implement and what are they testing in your code?**
 >
-> Recommended answer length: 50-100 words.
->
-> Example:
-> *In total we have implemented X tests. Primarily we are testing ... and ... as these the most critical parts of our*
-> *application but also ... .*
->
-> Answer:
-
---- question 7 fill here ---
+> Answer: We have implemented 17 tests. Our focus was testing dataset, training, prediction, api and util functions which
+> are the core scripts for our repo.
 
 ### Question 8 (ENES)
 
 > **What is the total code coverage (in percentage) of your code? If you code had an code coverage of 100% (or close**
 > **to), would you still trust it to be error free? Explain you reasoning.**
 >
-> Recommended answer length: 100-200 words.
->
-> Example:
-> *The total code coverage of code is X%, which includes all our source code. We are far from 100% coverage of our **
-> *code and even if we were then...*
->
-> Answer:
-
---- question 8 fill here ---
+> Answer: Total coverage of code is 85%. We are not too close to 100% becuase of the challenges of testing
+> the training and prediction scripts. Even we covered 100%, we still can not be sure all the code is error free becuase
+> the coverage only measures if everyline is tested, but there can be other edge scenarios or some logic errors.
 
 ### Question 9 (JULIA)
 
@@ -242,9 +224,10 @@ We used the third-party framework Transformers in our project. It provided multi
 > *We did make use of DVC in the following way: ... . In the end it helped us in ... for controlling ... part of our*
 > *pipeline*
 >
-> Answer:
-
---- question 10 fill here ---
+> Answer: We have used DVC for data version & data storing & trained model weights storing. This approach helped us with
+> storing big files. Especially our model weight files are much bigger than we can store in github so using DVC with GCP
+> was a great solution as well. Also DVC is great for versioning the dataset used for training but throughout our project
+> we have only used 1 version of the dataset.
 
 ### Question 11 (DANIEL)
 
@@ -336,13 +319,8 @@ We used the third-party framework Transformers in our project. It provided multi
 >
 > Recommended answer length: 100-200 words.
 >
-> Example:
-> *Debugging method was dependent on group member. Some just used ... and others used ... . We did a single profiling*
-> *run of our main code at some point that showed ...*
->
-> Answer:
-
---- question 16 fill here ---
+> Answer: We have all used VS code for debugging. We did not profile our code because most algorithms we have used were
+> from ready to use packages like pytorch-lightning.
 
 ## Working in the cloud
 
@@ -357,9 +335,13 @@ We used the third-party framework Transformers in our project. It provided multi
 > Example:
 > *We used the following two services: Engine and Bucket. Engine is used for... and Bucket is used for...*
 >
-> Answer:
-
---- question 17 fill here ---
+> Answer: We have used the following GCP services: Bucket, Artifact Storage, Build, Run, Compute Engine, Vertex AI.
+> - GCP Bucket: for storing data and model weights (with DVC)
+> - GCP Artifact Store: for storing our docker images, updating them in continuous integration and using them for Cloud Run APIs
+> - GCP Build: for continuous integration (everytime a PR is merged, docker images are build again and stored in Artifact Store)
+> - GCP Run: for serving our inference api and updating the docker image behind our API with our continuous integration set up.
+> - GCP Compute Engine: Used for training our model with GPUs.
+> - GCP Vertex AI: Used for automatically training our model everytime a PR is merged with our continuous integration.
 
 ### Question 18 (DANIEL)
 
@@ -415,24 +397,20 @@ We used the third-party framework Transformers in our project. It provided multi
 > *worked. Afterwards we deployed it in the cloud, using ... . To invoke the service an user would call*
 > *`curl -X POST -F "file=@file.json"<weburl>`*
 >
-> Answer:
-
---- question 22 fill here ---
+> Answer: To deploy our inference api we have used FastAPI. We first run the API locally to test and after successful tests,
+> we have created a docker file for our fastapi app (also tested this locally). Then we have deployed our model with Cloud Run
+> with the docker container. And this container behind our Cloud Run API is also automatically build and updated with our
+> continuous cloud integration. To invoke our API with a single sample one can use:
+> *`curl -X POST https://hate-speech-detection-cloudrun-api-sjx4y77sda-ey.a.run.app/predict_labels_one_tweet -F "tweet=this is my twwetttt"`*
 
 ### Question 23 (ENES)
 
 > **Did you manage to implement monitoring of your deployed model? If yes, explain how it works. If not, explain how**
 > **monitoring would help the longevity of your application.**
 >
-> Recommended answer length: 100-200 words.
->
-> Example:
-> *We did not manage to implement monitoring. We would like to have monitoring implemented such that over time we could*
-> *measure ... and ... that would inform us about this ... behaviour of our application.*
->
-> Answer:
-
---- question 23 fill here ---
+> Answer: We did not manage to implement monitoring. But after starting to have some user requests over time, monitoring
+> the input data & feature shift and the performance of our api would be very crucial for our application. By monitoring
+> those, we can make sure that our model is still suitable for the usage after time, and also user's experience is as expected.
 
 ### Question 24 (DANIEL)
 
@@ -497,5 +475,8 @@ We used the third-party framework Transformers in our project. It provided multi
 > *All members contributed to code by...*
 >
 > Answer:
+> - Enes: TBD
+> - Julia: TBD
+> - Daniel: TBD
 
 --- question 27 fill here ---

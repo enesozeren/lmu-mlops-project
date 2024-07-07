@@ -1,14 +1,17 @@
-from utils.utils_functions import get_datasets, tokenize_tweets
+import os
+
 import torch
-from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
-from pytorch_lightning.callbacks import ModelCheckpoint  # , EarlyStopping
-from pytorch_lightning import Trainer, seed_everything
-from pytorch_lightning.loggers import WandbLogger
 from hate_speech_model import HatespeechModel
+from pytorch_lightning import Trainer, seed_everything
+from pytorch_lightning.callbacks import ModelCheckpoint  # , EarlyStopping
+from pytorch_lightning.loggers import WandbLogger
+from torch.utils.data import DataLoader, RandomSampler, SequentialSampler, TensorDataset
+
+from utils.utils_functions import get_datasets, tokenize_tweets
 
 # Hyperparameters
-BATCH_SIZE = 4 * 32
-EPOCHS = 20
+BATCH_SIZE = 32
+EPOCHS = 5
 
 # Reproducibility
 seed_everything(47, workers=True)
@@ -32,8 +35,9 @@ validation_dataloader = DataLoader(val_set, sampler=SequentialSampler(val_set), 
 # Train the model
 model = HatespeechModel()
 
+checkpoint_path = "mlops_project/checkpoints" if len(os.listdir("/gcs")) == 0 else "/gcs/checkpoints"
 checkpoint_callback = ModelCheckpoint(
-    monitor="val_loss", dirpath="mlops_project/checkpoints", filename="best-checkpoint", save_top_k=1, mode="min"
+    monitor="val_loss", dirpath=checkpoint_path, filename="best-checkpoint", save_top_k=1, mode="min"
 )
 
 # early_stopping_callback = EarlyStopping(monitor="val_loss", patience=3, verbose=True, mode="min")
@@ -50,3 +54,8 @@ trainer = Trainer(
     callbacks=[checkpoint_callback],  # , early_stopping_callback
 )
 trainer.fit(model, train_dataloader, validation_dataloader)
+
+# save best model as model weights
+model = model.load_from_checkpoint(os.path.join(checkpoint_path, "best-checkpoint.ckpt"))
+state_dict = model.model.state_dict()
+torch.save(state_dict, "/gcs/mlops_project/models/saved_models/bsc_weights.pth")

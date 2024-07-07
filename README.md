@@ -70,10 +70,11 @@ Currently large language models has the state-of-the-art results for most NLP ta
 ```
 
 ## Dataset
-To get the dataset, use
+To get the dataset and trained model weights, use
 ```bash
 dvc pull
 ```
+Note: You need GCP bucket permissions to be able to run this command
 
 ## Inference
 Predictions from this script are saved to outputs directory. To make a prediction, use

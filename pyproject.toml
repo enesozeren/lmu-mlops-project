@@ -5,9 +5,9 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "mlops_project"
 version = "0.0.1"
-description = "This project is taking place in context of the MLOps lecture. The overall goal of the project is to classify human and machine generated tweets for deep fake social media text detection."
+description = "This project is taking place in context of the MLOps lecture. The overall goal of the project is to detect if a given text is hate speech or not."
 authors = [
-  { name = "Oezeren, Gloukhman, Broden, Schuettpelz", email = "your@email.com" },
+  { name = "Oezeren, Gloukhman, Broden, Schuettpelz"},
 ]
 license = { file = "LICENSE" }
 readme = "README.md"

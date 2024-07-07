@@ -1,48 +1,51 @@
 import os
+import pytest
+
+DATA_DIR = "data/raw"
 
 
+@pytest.mark.skipif(not os.path.exists(DATA_DIR), reason="Data files not found")
 def test_raw_data():
-    data_dir = "data/raw"
-    assert os.path.exists(os.path.join(data_dir, "mapping.txt")), "mapping.txt not found"
-    assert os.path.exists(os.path.join(data_dir, "train_labels.txt")), "train_labels.txt not found"
-    assert os.path.exists(os.path.join(data_dir, "val_labels.txt")), "val_labels.txt not found"
-    assert os.path.exists(os.path.join(data_dir, "val_text.txt")), "val_text.txt not found"
-    assert os.path.exists(os.path.join(data_dir, "test_labels.txt")), "test_labels.txt not found"
-    assert os.path.exists(os.path.join(data_dir, "test_text.txt")), "test_text.txt not found"
+    assert os.path.exists(os.path.join(DATA_DIR, "mapping.txt")), "mapping.txt not found"
+    assert os.path.exists(os.path.join(DATA_DIR, "train_labels.txt")), "train_labels.txt not found"
+    assert os.path.exists(os.path.join(DATA_DIR, "val_labels.txt")), "val_labels.txt not found"
+    assert os.path.exists(os.path.join(DATA_DIR, "val_text.txt")), "val_text.txt not found"
+    assert os.path.exists(os.path.join(DATA_DIR, "test_labels.txt")), "test_labels.txt not found"
+    assert os.path.exists(os.path.join(DATA_DIR, "test_text.txt")), "test_text.txt not found"
 
 
+@pytest.mark.skipif(not os.path.exists(DATA_DIR), reason="Data files not found")
 def test_files_not_empty():
-    data_dir = "data/raw"
-    assert_file_not_empty(os.path.join(data_dir, "train_labels.txt"), "train_labels.txt is empty")
-    assert_file_not_empty(os.path.join(data_dir, "train_text.txt"), "train_text.txt is empty")
-    assert_file_not_empty(os.path.join(data_dir, "val_labels.txt"), "val_labels.txt is empty")
-    assert_file_not_empty(os.path.join(data_dir, "val_text.txt"), "val_text.txt is empty")
-    assert_file_not_empty(os.path.join(data_dir, "test_labels.txt"), "test_labels.txt is empty")
-    assert_file_not_empty(os.path.join(data_dir, "test_text.txt"), "test_text.txt is empty")
+    assert_file_not_empty(os.path.join(DATA_DIR, "train_labels.txt"), "train_labels.txt is empty")
+    assert_file_not_empty(os.path.join(DATA_DIR, "train_text.txt"), "train_text.txt is empty")
+    assert_file_not_empty(os.path.join(DATA_DIR, "val_labels.txt"), "val_labels.txt is empty")
+    assert_file_not_empty(os.path.join(DATA_DIR, "val_text.txt"), "val_text.txt is empty")
+    assert_file_not_empty(os.path.join(DATA_DIR, "test_labels.txt"), "test_labels.txt is empty")
+    assert_file_not_empty(os.path.join(DATA_DIR, "test_text.txt"), "test_text.txt is empty")
 
 
+@pytest.mark.skipif(not os.path.exists(DATA_DIR), reason="Data files not found")
 def test_label_text_match():
-    data_dir = "data/raw"
     assert_label_text_match(
-        os.path.join(data_dir, "train_labels.txt"),
-        os.path.join(data_dir, "train_text.txt"),
+        os.path.join(DATA_DIR, "train_labels.txt"),
+        os.path.join(DATA_DIR, "train_text.txt"),
         "Number of train labels and text do not match",
     )
     assert_label_text_match(
-        os.path.join(data_dir, "val_labels.txt"),
-        os.path.join(data_dir, "val_text.txt"),
+        os.path.join(DATA_DIR, "val_labels.txt"),
+        os.path.join(DATA_DIR, "val_text.txt"),
         "Number of val labels and text do not match",
     )
     assert_label_text_match(
-        os.path.join(data_dir, "test_labels.txt"),
-        os.path.join(data_dir, "test_text.txt"),
+        os.path.join(DATA_DIR, "test_labels.txt"),
+        os.path.join(DATA_DIR, "test_text.txt"),
         "Number of test labels and text do not match",
     )
 
 
+@pytest.mark.skipif(not os.path.exists(DATA_DIR), reason="Data files not found")
 def test_mapping():
-    data_dir = "data/raw"
-    assert_mapping(os.path.join(data_dir, "mapping.txt"))
+    assert_mapping(os.path.join(DATA_DIR, "mapping.txt"))
 
 
 def assert_file_not_empty(file_path, error_message):

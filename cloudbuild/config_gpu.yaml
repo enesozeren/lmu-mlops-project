@@ -7,7 +7,7 @@ workerPoolSpecs:
   containerSpec:
     imageUri: europe-west3-docker.pkg.dev/lmumlops/hatespeech-detection-docker-repo/train-model
     env:
-      # - name: WANDB_API_KEY
-      #   value: $WANDB_API_KEY
-      - name: PJRT_DEVICE
-        value: GPU
+      - name: WANDB_API_KEY
+        value: $WANDB_API_KEY
+      # - name: PJRT_DEVICE
+      #   value: GPU

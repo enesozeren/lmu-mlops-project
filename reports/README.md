@@ -52,38 +52,38 @@ curriculum in this course. Therefore, we do not expect at all that you have chec
 
 ### Week 1
 
-* [ ] Create a git repository
-* [ ] Make sure that all team members have write access to the GitHub repository
-* [ ] Create a dedicated environment for you project to keep track of your packages
-* [ ] Create the initial file structure using cookiecutter
-* [ ] Fill out the `make_dataset.py` file such that it downloads whatever data you need and
-* [ ] Add a model file and a training script and get that running
-* [ ] Remember to fill out the `requirements.txt` file with whatever dependencies that you are using
-* [ ] Remember to comply with good coding practices (`pep8`) while doing the project
-* [ ] Do a bit of code typing and remember to document essential parts of your code
-* [ ] Setup version control for your data or part of your data
-* [ ] Construct one or multiple docker files for your code
-* [ ] Build the docker files locally and make sure they work as intended
+* [✔] Create a git repository
+* [✔] Make sure that all team members have write access to the GitHub repository
+* [✔] Create a dedicated environment for you project to keep track of your packages
+* [✔] Create the initial file structure using cookiecutter
+* [✔] Fill out the `make_dataset.py` file such that it downloads whatever data you need and
+* [✔] Add a model file and a training script and get that running
+* [✔] Remember to fill out the `requirements.txt` file with whatever dependencies that you are using
+* [✔] Remember to comply with good coding practices (`pep8`) while doing the project
+* [✔] Do a bit of code typing and remember to document essential parts of your code
+* [✔] Setup version control for your data or part of your data
+* [✔] Construct one or multiple docker files for your code
+* [✔] Build the docker files locally and make sure they work as intended
 * [ ] Write one or multiple configurations files for your experiments
 * [ ] Used Hydra to load the configurations and manage your hyperparameters
 * [ ] When you have something that works somewhat, remember at some point to to some profiling and see if
       you can optimize your code
-* [ ] Use Weights & Biases to log training progress and other important metrics/artifacts in your code. Additionally,
+* [✔] Use Weights & Biases to log training progress and other important metrics/artifacts in your code. Additionally,
       consider running a hyperparameter optimization sweep.
-* [ ] Use Pytorch-lightning (if applicable) to reduce the amount of boilerplate in your code
+* [✔] Use Pytorch-lightning (if applicable) to reduce the amount of boilerplate in your code
 
 ### Week 2
 
-* [ ] Write unit tests related to the data part of your code
-* [ ] Write unit tests related to model construction and or model training
-* [ ] Calculate the coverage.
-* [ ] Get some continuous integration running on the GitHub repository
-* [ ] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
-* [ ] Create a trigger workflow for automatically building your docker images
-* [ ] Get your model training in GCP using either the Engine or Vertex AI
-* [ ] Create a FastAPI application that can do inference using your model
+* [✔] Write unit tests related to the data part of your code
+* [✔] Write unit tests related to model construction and or model training
+* [✔] Calculate the coverage.
+* [✔] Get some continuous integration running on the GitHub repository
+* [✔] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
+* [✔] Create a trigger workflow for automatically building your docker images
+* [✔] Get your model training in GCP using either the Engine or Vertex AI
+* [✔] Create a FastAPI application that can do inference using your model
 * [ ] If applicable, consider deploying the model locally using torchserve
-* [ ] Deploy your model in GCP using either Functions or Run as the backend
+* [✔] Deploy your model in GCP using either Functions or Run as the backend
 
 ### Week 3
 
@@ -96,9 +96,9 @@ curriculum in this course. Therefore, we do not expect at all that you have chec
 
 ### Additional
 
-* [ ] Revisit your initial project description. Did the project turn out as you wanted?
-* [ ] Make sure all group members have a understanding about all parts of the project
-* [ ] Uploaded all your code to github
+* [✔] Revisit your initial project description. Did the project turn out as you wanted?
+* [✔] Make sure all group members have a understanding about all parts of the project
+* [✔] Uploaded all your code to github
 
 ## Group information
 
@@ -218,12 +218,6 @@ We used the third-party framework Transformers in our project. It provided multi
 > **Did you use DVC for managing data in your project? If yes, then how did it improve your project to have version**
 > **control of your data. If no, explain a case where it would be beneficial to have version control of your data.**
 >
-> Recommended answer length: 100-200 words.
->
-> Example:
-> *We did make use of DVC in the following way: ... . In the end it helped us in ... for controlling ... part of our*
-> *pipeline*
->
 > Answer: We have used DVC for data version & data storing & trained model weights storing. This approach helped us with
 > storing big files. Especially our model weight files are much bigger than we can store in github so using DVC with GCP
 > was a great solution as well. Also DVC is great for versioning the dataset used for training but throughout our project
@@ -317,8 +311,6 @@ We used the third-party framework Transformers in our project. It provided multi
 > **When running into bugs while trying to run your experiments, how did you perform debugging? Additionally, did you**
 > **try to profile your code or do you think it is already perfect?**
 >
-> Recommended answer length: 100-200 words.
->
 > Answer: We have all used VS code for debugging. We did not profile our code because most algorithms we have used were
 > from ready to use packages like pytorch-lightning.
 
@@ -329,11 +321,6 @@ We used the third-party framework Transformers in our project. It provided multi
 ### Question 17 (ENES)
 
 > **List all the GCP services that you made use of in your project and shortly explain what each service does?**
->
-> Recommended answer length: 50-200 words.
->
-> Example:
-> *We used the following two services: Engine and Bucket. Engine is used for... and Bucket is used for...*
 >
 > Answer: We have used the following GCP services: Bucket, Artifact Storage, Build, Run, Compute Engine, Vertex AI.
 > - GCP Bucket: for storing data and model weights (with DVC)
@@ -361,41 +348,27 @@ We used the third-party framework Transformers in our project. It provided multi
 ### Question 19 (ENES)
 
 > **Insert 1-2 images of your GCP bucket, such that we can see what data you have stored in it.**
-> **You can take inspiration from [this figure](figures/bucket.png).**
 >
-> Answer:
-
---- question 19 fill here ---
+> Answer: See the image for our GCP Bucket ([GCP Bucket](figures/gcp_bucket.png)).
+> We store our data and model weights in it ([Inside GCP Bucket](figures/inside_gcp_gucket.png)).
 
 ### Question 20 (ENES)
 
 > **Upload one image of your GCP artifact registry, such that we can see the different images that you have stored.**
-> **You can take inspiration from [this figure](figures/registry.png).**
 >
-> Answer:
-
---- question 20 fill here ---
+> Answer: See the image for our GCP Artifact Registry ([GCP Artifact Registry](figures/gcp_artifact_registry.png)).
+> We store and continuously build our docker images in it ([Inside GCP Artifact Registry](figures/inside_gcp_artifact_registry.png)).
 
 ### Question 21 (ENES)
 
 > **Upload one image of your GCP cloud build history, so we can see the history of the images that have been build in**
-> **your project. You can take inspiration from [this figure](figures/build.png).**
 >
-> Answer:
-
---- question 21 fill here ---
+> Answer: See the image for our GCP Cloud Build history ([GCP Cloud Build History](figures/gcp_build.png)).
 
 ### Question 22 (ENES)
 
 > **Did you manage to deploy your model, either in locally or cloud? If not, describe why. If yes, describe how and**
 > **preferably how you invoke your deployed service?**
->
-> Recommended answer length: 100-200 words.
->
-> Example:
-> *For deployment we wrapped our model into application using ... . We first tried locally serving the model, which*
-> *worked. Afterwards we deployed it in the cloud, using ... . To invoke the service an user would call*
-> *`curl -X POST -F "file=@file.json"<weburl>`*
 >
 > Answer: To deploy our inference api we have used FastAPI. We first run the API locally to test and after successful tests,
 > we have created a docker file for our fastapi app (also tested this locally). Then we have deployed our model with Cloud Run
@@ -458,6 +431,7 @@ We used the third-party framework Transformers in our project. It provided multi
 > *The biggest challenges in the project was using ... tool to do ... . The reason for this was ...*
 >
 > Answer:
+> - Enes:
 
 --- question 26 fill here ---
 
@@ -475,8 +449,14 @@ We used the third-party framework Transformers in our project. It provided multi
 > *All members contributed to code by...*
 >
 > Answer:
-> - Enes: TBD
-> - Julia: TBD
-> - Daniel: TBD
-
---- question 27 fill here ---
+> - Enes' Responsibilities:
+> - - Writing scripts to crawl the dataset from a github repo. Storing the data with DVC. Also writing the unit tests for dataset.
+> - - Developing prediction script and the docker file for that. Also writing unit tests for prediction script
+> - - Development of some utility functions and unit tests for them.
+> - - Creating a Fastapi, creating dockerfile for it, deploying the api with Cloud Run and Functions. Writing
+> unit tests and load test scripts for the api. Also developed the continuous integration for Cloud Run.
+> - - Setting up the Github Actions for unit tests & credentials & rules of the repository (review requirements etc.).
+> - Julia's Responsibilities:
+> - - TBD
+> - Daniel's Responsibilities: TBD
+> - - TBD

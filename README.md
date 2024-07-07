@@ -15,6 +15,60 @@ Currently large language models has the state-of-the-art results for most NLP ta
 
 # Repository
 
+## Structure & Explanations
+```
+.
+├── LICENSE
+├── Makefile
+├── README.md
+├── api                                         <- Has scripts to create a FastAPI for inference
+│   ├── __init__.py
+│   └── main.py
+├── cloudbuild.yaml                             <- Used for continuous integration with GCP
+├── data                                        <- Contains data and dvc file
+│   ├── raw
+│   └── raw.dvc
+├── dockerfiles                                 <- Contains dockerfiles for training, prediction, api
+│   ├── hatespeech_base.dockerfile
+│   ├── inference_api.dockerfile
+│   ├── predict_model.dockerfile
+│   └── train_model.dockerfile
+├── docs
+│   ├── README.md
+│   ├── mkdocs.yaml
+│   └── source
+├── mlops_project                               <- Source code directory
+│   ├── __init__.py
+│   ├── data
+│   │   └── make_dataset.py                     <- To get the data from the original source
+│   ├── hate_speech_model.py                    <- Model
+│   ├── models
+│   │   └── saved_models                        <- Contains the trained model weigts (tracked with dvc)
+│   ├── models.dvc
+│   ├── predict_model.py                        <- Script for prediction with trained model weights
+│   └── train_model.py                          <- Script for training
+├── outputs
+│   └── predictions                             <- Contains outputs from for predict_model.py script
+├── pyproject.toml                              <- File for building environment
+├── reports                                     <- Contains answers to LMU MLOps lecture questions
+│   ├── README.md
+│   ├── figures
+│   └── report.py
+├── requirements.txt                            <- requirements for inference
+├── requirements_dev.txt                        <- requirements for development
+├── tests                                       <- Contains unit tests and api load tests
+│   ├── __init__.py
+│   ├── api_performance_locustfile.py
+│   ├── test_api.py
+│   ├── test_data.py
+│   ├── test_hate_speech_model.py
+│   ├── test_predict_model.py
+│   └── test_utils.py
+└── utils                                       <- Contains utility functions to be used in other scripts
+    ├── __init__.py
+    └── utils_functions.py
+```
+
 ## Dataset
 To get the dataset, use
 ```bash

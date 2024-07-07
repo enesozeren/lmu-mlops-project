@@ -105,15 +105,16 @@ curriculum in this course. Therefore, we do not expect at all that you have chec
 ### Question 1
 > **Enter the group number you signed up on <learn.inside.dtu.dk>**
 >
-> Answer: NaN
+> Answer:
 
+NaN
 
 ### Question 2 (ALL)
 > **Enter the study number for each member in the group**
 >
-> Answer: Enes Özeren (12788990)
+> Answer:
 
---- question 2 fill here ---
+Enes Özeren (12788990)
 
 ### Question 3 (JULIA)
 > **What framework did you choose to work with and did it help you complete the project?**
@@ -186,17 +187,21 @@ We used the third-party framework Transformers in our project. It provided multi
 
 > **How many tests did you implement and what are they testing in your code?**
 >
-> Answer: We have implemented 17 tests. Our focus was testing dataset, training, prediction, api and util functions which
-> are the core scripts for our repo.
+> Answer:
+
+We have implemented 17 tests. Our focus was testing dataset, training, prediction, api and util functions which
+are the core scripts for our repo.
 
 ### Question 8 (ENES)
 
 > **What is the total code coverage (in percentage) of your code? If you code had an code coverage of 100% (or close**
 > **to), would you still trust it to be error free? Explain you reasoning.**
 >
-> Answer: Total coverage of code is 85%. We are not too close to 100% becuase of the challenges of testing
-> the training and prediction scripts. Even we covered 100%, we still can not be sure all the code is error free becuase
-> the coverage only measures if everyline is tested, but there can be other edge scenarios or some logic errors.
+> Answer:
+
+Total coverage of code is 85%. We are not too close to 100% becuase of the challenges of testing
+the training and prediction scripts. Even we covered 100%, we still can not be sure all the code is error free becuase
+the coverage only measures if everyline is tested, but there can be other edge scenarios or some logic errors.
 
 ### Question 9 (JULIA)
 
@@ -218,10 +223,12 @@ We used the third-party framework Transformers in our project. It provided multi
 > **Did you use DVC for managing data in your project? If yes, then how did it improve your project to have version**
 > **control of your data. If no, explain a case where it would be beneficial to have version control of your data.**
 >
-> Answer: We have used DVC for data version & data storing & trained model weights storing. This approach helped us with
-> storing big files. Especially our model weight files are much bigger than we can store in github so using DVC with GCP
-> was a great solution as well. Also DVC is great for versioning the dataset used for training but throughout our project
-> we have only used 1 version of the dataset.
+> Answer:
+
+We have used DVC for data version & data storing & trained model weights storing. This approach helped us with
+storing big files. Especially our model weight files are much bigger than we can store in github so using DVC with GCP
+was a great solution as well. Also DVC is great for versioning the dataset used for training but throughout our project
+we have only used 1 version of the dataset.
 
 ### Question 11 (DANIEL)
 
@@ -311,8 +318,10 @@ We used the third-party framework Transformers in our project. It provided multi
 > **When running into bugs while trying to run your experiments, how did you perform debugging? Additionally, did you**
 > **try to profile your code or do you think it is already perfect?**
 >
-> Answer: We have all used VS code for debugging. We did not profile our code because most algorithms we have used were
-> from ready to use packages like pytorch-lightning.
+> Answer:
+
+We have all used VS code for debugging. We did not profile our code because most algorithms we have used were
+from ready to use packages like pytorch-lightning.
 
 ## Working in the cloud
 
@@ -322,13 +331,15 @@ We used the third-party framework Transformers in our project. It provided multi
 
 > **List all the GCP services that you made use of in your project and shortly explain what each service does?**
 >
-> Answer: We have used the following GCP services: Bucket, Artifact Storage, Build, Run, Compute Engine, Vertex AI.
-> - GCP Bucket: for storing data and model weights (with DVC)
-> - GCP Artifact Store: for storing our docker images, updating them in continuous integration and using them for Cloud Run APIs
-> - GCP Build: for continuous integration (everytime a PR is merged, docker images are build again and stored in Artifact Store)
-> - GCP Run: for serving our inference api and updating the docker image behind our API with our continuous integration set up.
-> - GCP Compute Engine: Used for training our model with GPUs.
-> - GCP Vertex AI: Used for automatically training our model everytime a PR is merged with our continuous integration.
+> Answer:
+
+We have used the following GCP services: Bucket, Artifact Storage, Build, Run, Compute Engine, Vertex AI.
+- GCP Bucket: for storing data and model weights (with DVC)
+- GCP Artifact Store: for storing our docker images, updating them in continuous integration and using them for Cloud Run APIs
+- GCP Build: for continuous integration (everytime a PR is merged, docker images are build again and stored in Artifact Store)
+- GCP Run: for serving our inference api and updating the docker image behind our API with our continuous integration set up.
+- GCP Compute Engine: Used for training our model with GPUs.
+- GCP Vertex AI: Used for automatically training our model everytime a PR is merged with our continuous integration.
 
 ### Question 18 (DANIEL)
 
@@ -349,41 +360,51 @@ We used the third-party framework Transformers in our project. It provided multi
 
 > **Insert 1-2 images of your GCP bucket, such that we can see what data you have stored in it.**
 >
-> Answer: See the image for our GCP Bucket ([GCP Bucket](figures/gcp_bucket.png)).
-> We store our data and model weights in it ([Inside GCP Bucket](figures/inside_gcp_gucket.png)).
+> Answer:
+
+See the image for our GCP Bucket ([GCP Bucket](figures/gcp_bucket.png)).
+We store our data and model weights in it ([Inside GCP Bucket](figures/inside_gcp_gucket.png)).
 
 ### Question 20 (ENES)
 
 > **Upload one image of your GCP artifact registry, such that we can see the different images that you have stored.**
 >
-> Answer: See the image for our GCP Artifact Registry ([GCP Artifact Registry](figures/gcp_artifact_registry.png)).
-> We store and continuously build our docker images in it ([Inside GCP Artifact Registry](figures/inside_gcp_artifact_registry.png)).
+> Answer:
+
+See the image for our GCP Artifact Registry ([GCP Artifact Registry](figures/gcp_artifact_registry.png)).
+We store and continuously build our docker images in it ([Inside GCP Artifact Registry](figures/inside_gcp_artifact_registry.png)).
 
 ### Question 21 (ENES)
 
 > **Upload one image of your GCP cloud build history, so we can see the history of the images that have been build in**
 >
-> Answer: See the image for our GCP Cloud Build history ([GCP Cloud Build History](figures/gcp_build.png)).
+> Answer:
+
+See the image for our GCP Cloud Build history ([GCP Cloud Build History](figures/gcp_build.png)).
 
 ### Question 22 (ENES)
 
 > **Did you manage to deploy your model, either in locally or cloud? If not, describe why. If yes, describe how and**
 > **preferably how you invoke your deployed service?**
 >
-> Answer: To deploy our inference api we have used FastAPI. We first run the API locally to test and after successful tests,
-> we have created a docker file for our fastapi app (also tested this locally). Then we have deployed our model with Cloud Run
-> with the docker container. And this container behind our Cloud Run API is also automatically build and updated with our
-> continuous cloud integration. To invoke our API with a single sample one can use:
-> *`curl -X POST https://hate-speech-detection-cloudrun-api-sjx4y77sda-ey.a.run.app/predict_labels_one_tweet -F "tweet=this is my twwetttt"`*
+> Answer:
+
+To deploy our inference api we have used FastAPI. We first run the API locally to test and after successful tests,
+we have created a docker file for our fastapi app (also tested this locally). Then we have deployed our model with Cloud Run
+with the docker container. And this container behind our Cloud Run API is also automatically build and updated with our
+continuous cloud integration. To invoke our API with a single sample one can use:
+*`curl -X POST https://hate-speech-detection-cloudrun-api-sjx4y77sda-ey.a.run.app/predict_labels_one_tweet -F "tweet=this is my twwetttt"`*
 
 ### Question 23 (ENES)
 
 > **Did you manage to implement monitoring of your deployed model? If yes, explain how it works. If not, explain how**
 > **monitoring would help the longevity of your application.**
 >
-> Answer: We did not manage to implement monitoring. But after starting to have some user requests over time, monitoring
-> the input data & feature shift and the performance of our api would be very crucial for our application. By monitoring
-> those, we can make sure that our model is still suitable for the usage after time, and also user's experience is as expected.
+> Answer:
+
+We did not manage to implement monitoring. But after starting to have some user requests over time, monitoring
+the input data & feature shift and the performance of our api would be very crucial for our application. By monitoring
+those, we can make sure that our model is still suitable for the usage after time, and also user's experience is as expected.
 
 ### Question 24 (DANIEL)
 
@@ -431,9 +452,9 @@ We used the third-party framework Transformers in our project. It provided multi
 > *The biggest challenges in the project was using ... tool to do ... . The reason for this was ...*
 >
 > Answer:
-> - Enes:
 
---- question 26 fill here ---
+- Enes Comments: We had some struggles with the continuous integration with cloud. Sometimes erros about GCP permission
+were complicated to solve but we have come up with solutions by checking the documentation & some forums.
 
 ### Question 27 (ALL)
 
@@ -449,14 +470,15 @@ We used the third-party framework Transformers in our project. It provided multi
 > *All members contributed to code by...*
 >
 > Answer:
-> - Enes' Responsibilities:
-> - - Writing scripts to crawl the dataset from a github repo. Storing the data with DVC. Also writing the unit tests for dataset.
-> - - Developing prediction script and the docker file for that. Also writing unit tests for prediction script
-> - - Development of some utility functions and unit tests for them.
-> - - Creating a Fastapi, creating dockerfile for it, deploying the api with Cloud Run and Functions. Writing
-> unit tests and load test scripts for the api. Also developed the continuous integration for Cloud Run.
-> - - Setting up the Github Actions for unit tests & credentials & rules of the repository (review requirements etc.).
-> - Julia's Responsibilities:
-> - - TBD
-> - Daniel's Responsibilities: TBD
-> - - TBD
+
+- Enes' Responsibilities:
+- - Writing scripts to crawl the dataset from a github repo. Storing the data with DVC. Also writing the unit tests for dataset.
+- - Developing prediction script and the docker file for that. Also writing unit tests for prediction script
+- - Development of some utility functions and unit tests for them.
+- - Creating a Fastapi, creating dockerfile for it, deploying the api with Cloud Run and Functions. Writing
+unit tests and load test scripts for the api. Also developed the continuous integration for Cloud Run.
+- - Setting up the Github Actions for unit tests & credentials & rules of the repository (review requirements etc.).
+- Julia's Responsibilities:
+- - TBD
+- Daniel's Responsibilities: TBD
+- - TBD

@@ -1,21 +1,23 @@
 steps:
-  - id: get-git-history
-    name: gcr.io/cloud-builders/git
-    entrypoint: bash
-    args:
-      - "-c"
-      - |
-        git clone https://github.com/enesozeren/lmu-mlops-project.git --no-checkout
-        mv lmu-mlops-project/.git .
-        git fetch --unshallow
-        rm -rf lmu-mlops-project
-  - name: python:slim
-    entrypoint: bash
-    args: ["-c", "pip install -U dvc dvc[gs]; dvc pull;"]
-    id: Model_Pull
+  - name: "gcr.io/cloud-builders/gcloud"
+    id: "pull bucket data"
+    waitFor: ["-"]
+    args: ["storage", "rsync", "-r", "gs://data_bucket_lmu/data/", "data"]
 
+  - name: "gcr.io/cloud-builders/gcloud"
+    id: "pull bucket modelweights"
+    waitFor: ["-"]
+    args:
+      [
+        "storage",
+        "rsync",
+        "-r",
+        "gs://data_bucket_lmu/mlops_project/models/",
+        "mlops_project/models",
+      ]
   - name: "gcr.io/cloud-builders/docker"
     id: "Build hatespeech-base image"
+    waitFor: ["-"]
     args:
       [
         "build",
@@ -28,6 +30,7 @@ steps:
 
   - name: "gcr.io/cloud-builders/docker"
     id: "Build train container image"
+    waitFor: ["Build hatespeech-base image"]
     args:
       [
         "build",
@@ -40,6 +43,7 @@ steps:
 
   - name: "gcr.io/cloud-builders/docker"
     id: "Build inference api container image"
+    waitFor: ["Build hatespeech-base image", "pull bucket modelweights"]
     args:
       [
         "build",
@@ -51,6 +55,12 @@ steps:
       ]
   - name: "gcr.io/cloud-builders/docker"
     id: "Build predict container image"
+    waitFor:
+      [
+        "Build hatespeech-base image",
+        "pull bucket modelweights",
+        "pull bucket data",
+      ]
     args:
       [
         "build",
@@ -63,6 +73,7 @@ steps:
 
   - name: "gcr.io/cloud-builders/gcloud"
     id: "Deploy inference api docker container to Cloud Run"
+    waitFor: ["Build inference api container image"]
     args:
       [
         "run",

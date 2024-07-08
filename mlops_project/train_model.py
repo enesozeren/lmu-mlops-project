@@ -11,7 +11,7 @@ from hate_speech_model import HatespeechModel
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description="Script to run with a config file.")
-parser.add_argument("--config", type=str, required=True, help="Path to the configuration file.")
+parser.add_argument("--config", type=str, required=True, help="Path to the training configuration file.")
 args = parser.parse_args()
 
 # Load YAML configuration file
@@ -19,6 +19,10 @@ with open(args.config, "r") as file:
     config = yaml.safe_load(file)
 
 wandb.init(project="hate_speech_detection", config=config)
+
+# sweep_id = wandb.sweep(sweep=config, project="hate_speech_detection")
+# wandb.agent(sweep_id, function=train_model)
+
 
 # Reproducibility
 seed_everything(47, workers=True)

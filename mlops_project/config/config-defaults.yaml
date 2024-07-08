@@ -1,3 +1,4 @@
-# config defaults file
+# train config defaults file
 BATCH_SIZE: 32
 EPOCHS: 2
+LEARNING_RATE: 5e-5

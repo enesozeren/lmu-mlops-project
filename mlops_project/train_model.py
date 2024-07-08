@@ -56,6 +56,6 @@ trainer = Trainer(
 trainer.fit(model, train_dataloader, validation_dataloader)
 
 # save best model as model weights
-model = HatespeechModel.load_from_checkpoint(os.path.join(checkpoint_path, "best-checkpoint.ckpt"))
-state_dict = model.model.state_dict()
-torch.save(state_dict, "/gcs/mlops_project/models/saved_models/bsc_weights.pth")
+checkpoint = torch.load(os.path.join(checkpoint_path, "best-checkpoint.ckpt"))
+state = {key[6:]: value for key, value in checkpoint["state_dict"].items()}
+torch.save(state, "/gcs/mlops_project/models/saved_models/bsc_weights.pth")

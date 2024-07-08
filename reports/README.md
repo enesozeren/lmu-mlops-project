@@ -115,6 +115,7 @@ NaN
 > Answer:
 
 Enes Özeren (12788990)
+
 Julia Broden (12502042)
 
 ### Question 3 (JULIA)

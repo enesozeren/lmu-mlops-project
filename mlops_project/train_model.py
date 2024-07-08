@@ -1,14 +1,24 @@
-from utils.utils_functions import get_datasets, tokenize_tweets
 import torch
+import argparse
+import yaml
+import wandb
+from utils.utils_functions import get_datasets, tokenize_tweets
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
 from pytorch_lightning.callbacks import ModelCheckpoint  # , EarlyStopping
 from pytorch_lightning import Trainer, seed_everything
 from pytorch_lightning.loggers import WandbLogger
 from hate_speech_model import HatespeechModel
 
-# Hyperparameters
-BATCH_SIZE = 32
-EPOCHS = 10
+# Parse command line arguments
+parser = argparse.ArgumentParser(description="Script to run with a config file.")
+parser.add_argument("--config", type=str, required=True, help="Path to the configuration file.")
+args = parser.parse_args()
+
+# Load YAML configuration file
+with open(args.config, "r") as file:
+    config = yaml.safe_load(file)
+
+wandb.init(project="hate_speech_detection", config=config)
 
 # Reproducibility
 seed_everything(47, workers=True)
@@ -25,8 +35,8 @@ val_labels = torch.tensor(val_labels)
 train_set = TensorDataset(train_token_ids, train_attention_masks, train_labels)
 val_set = TensorDataset(val_token_ids, val_attention_masks, val_labels)
 
-train_dataloader = DataLoader(train_set, sampler=RandomSampler(train_set), batch_size=BATCH_SIZE)
-validation_dataloader = DataLoader(val_set, sampler=SequentialSampler(val_set), batch_size=BATCH_SIZE)
+train_dataloader = DataLoader(train_set, sampler=RandomSampler(train_set), batch_size=config["BATCH_SIZE"])
+validation_dataloader = DataLoader(val_set, sampler=SequentialSampler(val_set), batch_size=config["BATCH_SIZE"])
 
 
 # Train the model
@@ -43,9 +53,9 @@ trainer = Trainer(
     devices="auto",
     precision="16-mixed",  # computations in 16-bit to speed up training, model weights in 32-bit to maintain accuracy
     deterministic=True,
-    max_epochs=EPOCHS,
-    # limit_train_batches=0.04,
-    # limit_val_batches=0.04,
+    max_epochs=config["EPOCHS"],
+    limit_train_batches=0.04,
+    limit_val_batches=0.04,
     logger=WandbLogger(project="hate_speech_detection"),
     callbacks=[checkpoint_callback],  # , early_stopping_callback
 )

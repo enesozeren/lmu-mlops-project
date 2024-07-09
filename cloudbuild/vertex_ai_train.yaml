@@ -7,7 +7,7 @@ steps:
       - |
         apk add --no-cache gettext
         envsubst < cloudbuild/config_gpu.yaml > config.yaml.tmp
-        mv config.yaml.tmp config.yaml
+        mv config.yaml.tmp cloudbuild/config_gpu.yaml
     secretEnv: ["WANDB_API_KEY"]
   - name: "alpine"
     id: "Show config"
@@ -16,7 +16,7 @@ steps:
     args:
       - "-c"
       - |
-        cat config.yaml
+        cat cloudbuild/config_gpu.yaml
 
   - name: "gcr.io/cloud-builders/gcloud"
     id: "Train on vertex AI"
@@ -31,7 +31,7 @@ steps:
         "--display-name",
         "train hatespeech model",
         "--config",
-        "config.yaml",
+        "cloudbuild/config_gpu.yaml",
       ]
 availableSecrets:
   secretManager:

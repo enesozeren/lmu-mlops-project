@@ -36,7 +36,6 @@ validation_dataloader = DataLoader(val_set, sampler=SequentialSampler(val_set), 
 
 # Train the model
 model = HatespeechModel()
-os.path.exists
 
 checkpoint_path = (
     os.path.join("gcs", CLOUD_BUCKET, "checkpoints")

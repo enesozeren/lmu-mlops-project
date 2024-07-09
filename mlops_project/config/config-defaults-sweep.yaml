@@ -9,3 +9,5 @@ parameters:
     values: [16, 32]
   EPOCHS:
     values: [2, 4]
+  LEARNING_RATE:
+    values: [0.00001, 0.000005]

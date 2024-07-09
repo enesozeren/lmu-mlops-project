@@ -44,7 +44,7 @@ validation_dataloader = DataLoader(val_set, sampler=SequentialSampler(val_set), 
 
 
 # Train the model
-model = HatespeechModel()
+model = HatespeechModel(config=config)
 
 checkpoint_callback = ModelCheckpoint(
     monitor="val_loss", dirpath="mlops_project/checkpoints", filename="best-checkpoint", save_top_k=1, mode="min"

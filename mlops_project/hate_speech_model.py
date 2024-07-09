@@ -3,20 +3,9 @@ import torch
 from torchmetrics.classification import Accuracy, Precision, Recall, Specificity
 from transformers import BertForSequenceClassification
 
-# import argparse
-# import yaml
-#
-# parser = argparse.ArgumentParser(description="Script to run with a config file.")
-# parser.add_argument("--config", type=str, required=True, help="Path to the training configuration file.")
-# args = parser.parse_args()
-#
-## Load YAML configuration file
-# with open(args.config, "r") as file:
-#    config = yaml.safe_load(file)
-
 
 class HatespeechModel(LightningModule):
-    def __init__(self):
+    def __init__(self, config):
         super(HatespeechModel, self).__init__()
         self.model = BertForSequenceClassification.from_pretrained(
             "bert-base-uncased",
@@ -30,6 +19,7 @@ class HatespeechModel(LightningModule):
         self.val_prec = Precision(task="binary")
         self.val_rec = Recall(task="binary")
         self.val_spec = Specificity(task="binary")
+        self.config = config
 
     def forward(self, input_ids, attention_mask, labels=None):
         outputs = self.model(input_ids, attention_mask=attention_mask, labels=labels)
@@ -67,5 +57,5 @@ class HatespeechModel(LightningModule):
         return val_loss
 
     def configure_optimizers(self):
-        optimizer = torch.optim.AdamW(self.parameters(), lr=5e-5, eps=1e-08)  # config["LEARNING_RATE"]
+        optimizer = torch.optim.AdamW(self.parameters(), lr=self.config["LEARNING_RATE"], eps=1e-08)  # 5e-5
         return optimizer

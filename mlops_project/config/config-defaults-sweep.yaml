@@ -1,13 +1,13 @@
 program: train_model.py
-name: first_sweep
-method: random
+name: reproducibility_sweep2 # Change sweep name
+method: grid
 metric:
   goal: minimize
   name: val_loss
 parameters:
   BATCH_SIZE:
-    values: [16, 32]
+    values: [32]
   EPOCHS:
-    values: [2, 4]
+    values: [3]
   LEARNING_RATE:
-    values: [0.00001, 0.000005]
+    values: [0.000005]

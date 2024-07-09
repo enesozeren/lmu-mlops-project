@@ -5,7 +5,7 @@ from transformers import BertForSequenceClassification
 
 
 class HatespeechModel(LightningModule):
-    def __init__(self, config):
+    def __init__(self, lr):
         super(HatespeechModel, self).__init__()
         self.model = BertForSequenceClassification.from_pretrained(
             "bert-base-uncased",
@@ -19,7 +19,7 @@ class HatespeechModel(LightningModule):
         self.val_prec = Precision(task="binary")
         self.val_rec = Recall(task="binary")
         self.val_spec = Specificity(task="binary")
-        self.config = config
+        self.lr = lr
 
     def forward(self, input_ids, attention_mask, labels=None):
         outputs = self.model(input_ids, attention_mask=attention_mask, labels=labels)
@@ -57,5 +57,5 @@ class HatespeechModel(LightningModule):
         return val_loss
 
     def configure_optimizers(self):
-        optimizer = torch.optim.AdamW(self.parameters(), lr=self.config["LEARNING_RATE"], eps=1e-08)  # 5e-5
+        optimizer = torch.optim.AdamW(self.parameters(), lr=self.lr, eps=1e-08)  # 5e-5
         return optimizer

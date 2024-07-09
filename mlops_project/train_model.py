@@ -39,6 +39,7 @@ def seed_worker(worker_id):
 g = torch.Generator()
 g.manual_seed(0)
 
+
 # Parse command line arguments
 parser = argparse.ArgumentParser(description="Script to run with a config file.")
 parser.add_argument("--config", type=str, required=True, help="Path to the training configuration file.")
@@ -54,11 +55,9 @@ sweep_id = wandb.sweep(sweep=config, project="hate_speech_detection")
 
 # Model initiliazation and training
 def main():
-    wandb.init(project="hate_speech_detection")  # , config=config
-
+    wandb.init(project="hate_speech_detection")
     train_dataloader = DataLoader(
         train_set,
-        # num_workers=num_workers,
         worker_init_fn=seed_worker,
         generator=g,
         sampler=RandomSampler(train_set),
@@ -66,7 +65,6 @@ def main():
     )
     validation_dataloader = DataLoader(
         val_set,
-        # num_workers=num_workers,
         worker_init_fn=seed_worker,
         generator=g,
         sampler=SequentialSampler(val_set),
@@ -97,4 +95,4 @@ def main():
     trainer.fit(model, train_dataloader, validation_dataloader)
 
 
-wandb.agent(sweep_id, function=main, count=8)
+wandb.agent(sweep_id, function=main, count=3)

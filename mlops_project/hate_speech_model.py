@@ -27,8 +27,8 @@ class HatespeechModel(LightningModule):
         return logits
 
     def training_step(self, batch):
-        input_ids, attention_mask, labels = batch  # input_itds represents token IDs
-        logits = self(input_ids, attention_mask)  # model forward pass
+        input_ids, attention_mask, labels = batch
+        logits = self(input_ids, attention_mask)
         loss = self.criterion(logits, labels)
         self.log("train_loss", loss, on_step=False, on_epoch=True)
 
@@ -57,5 +57,5 @@ class HatespeechModel(LightningModule):
         return val_loss
 
     def configure_optimizers(self):
-        optimizer = torch.optim.AdamW(self.parameters(), lr=self.lr, eps=1e-08)  # 5e-5
+        optimizer = torch.optim.AdamW(self.parameters(), lr=self.lr, eps=1e-08)
         return optimizer

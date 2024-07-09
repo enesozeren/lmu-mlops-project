@@ -4,8 +4,9 @@ import torch
 
 
 def test_training_step():
-    # given
+    # Given
     tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+
     # Create some dummy input data
     sample_text = ["She is such a slut.", "Another test tweet"]
     encoding = tokenizer(sample_text, return_tensors="pt", padding=True, truncation=True, max_length=128)
@@ -16,10 +17,9 @@ def test_training_step():
 
     # Create a dummy batch
     batch = (input_ids, attention_mask, labels)
-    # when
+
+    # When
     model = HatespeechModel()
     loss = model.training_step(batch)
-    # then
+    # Then
     assert isinstance(loss, torch.Tensor)
-    # https://pytorch.org/docs/stable/testing.html
-    # torch.testing.assert_close(loss.data, torch.tensor(0.6543))

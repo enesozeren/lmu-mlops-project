@@ -1,4 +1,0 @@
-# train config defaults file
-BATCH_SIZE: 32
-EPOCHS: 3
-LEARNING_RATE: 0.000005

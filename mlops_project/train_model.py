@@ -17,14 +17,6 @@ from utils.utils_functions import get_datasets, tokenize_tweets
 wandb.login()
 
 
-CLOUD_BUCKET = "data_bucket_lmu"
-checkpoint_path = (
-    os.path.join("gcs", CLOUD_BUCKET, "checkpoints")
-    if os.path.exists("/gcs/data_bucket_lmu/")
-    else "mlops_project/checkpoints"
-)
-
-
 # Get the training, validation, and test datasets
 (train_tweets, train_labels), (val_tweets, val_labels), (test_tweets, test_labels) = get_datasets()
 
@@ -107,6 +99,12 @@ def main():
     # Train the model
     trainer.fit(model, train_dataloader, validation_dataloader)
     # save best model as model weights
+    CLOUD_BUCKET = "data_bucket_lmu"
+    checkpoint_path = (
+        os.path.join("/gcs", CLOUD_BUCKET, "checkpoints")
+        if os.path.exists("/gcs/data_bucket_lmu/")
+        else "mlops_project/checkpoints"
+    )
     checkpoint = torch.load(os.path.join(checkpoint_path, "best-checkpoint.ckpt"))
     state = {key[6:]: value for key, value in checkpoint["state_dict"].items()}
     weight_path = os.path.join(checkpoint_path, "best-checkpoint.pth")

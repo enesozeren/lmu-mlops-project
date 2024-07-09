@@ -19,7 +19,7 @@ steps:
 
   - name: "gcr.io/cloud-builders/docker"
     id: "Build train container image"
-    waitFor: ["Build hatespeech-base image"]
+    waitFor: ["Build hatespeech-base image", "pull bucket data"]
     args:
       [
         "build",

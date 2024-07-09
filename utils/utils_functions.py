@@ -34,7 +34,7 @@ def get_datasets():
     Returns a tuple of tuples in the following order: ((train_tweets, train_labels), (val_tweets, val_labels), (test_tweets, test_labels))
     """
 
-    data_dir = "data/raw" if len(os.listdir("/gcs")) == 0 else "/gcs/data/raw"
+    data_dir = "data/raw" if not os.path.exists("/gcs/data_bucket_lmu/") else "/gcs/data_bucket_lmu/data/raw"
 
     # Load train, validation, and test datasets
     train_tweets, train_labels = read_dataset(

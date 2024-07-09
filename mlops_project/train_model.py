@@ -13,6 +13,8 @@ from utils.utils_functions import get_datasets, tokenize_tweets
 BATCH_SIZE = 32
 EPOCHS = 5
 
+CLOUD_BUCKET = "data_bucket_lmu"
+
 # Reproducibility
 seed_everything(47, workers=True)
 
@@ -28,14 +30,19 @@ val_labels = torch.tensor(val_labels)
 train_set = TensorDataset(train_token_ids, train_attention_masks, train_labels)
 val_set = TensorDataset(val_token_ids, val_attention_masks, val_labels)
 
-train_dataloader = DataLoader(train_set, sampler=RandomSampler(train_set), batch_size=BATCH_SIZE)
-validation_dataloader = DataLoader(val_set, sampler=SequentialSampler(val_set), batch_size=BATCH_SIZE)
+train_dataloader = DataLoader(train_set, sampler=RandomSampler(train_set), batch_size=BATCH_SIZE, num_workers=7)
+validation_dataloader = DataLoader(val_set, sampler=SequentialSampler(val_set), batch_size=BATCH_SIZE, num_workers=7)
 
 
 # Train the model
 model = HatespeechModel()
+os.path.exists
 
-checkpoint_path = "mlops_project/checkpoints" if len(os.listdir("/gcs")) == 0 else "/gcs/checkpoints"
+checkpoint_path = (
+    os.path.join("gcs", CLOUD_BUCKET, "checkpoints")
+    if os.path.exists("/gcs/data_bucket_lmu/")
+    else "mlops_project/checkpoints"
+)
 checkpoint_callback = ModelCheckpoint(
     monitor="val_loss", dirpath=checkpoint_path, filename="best-checkpoint", save_top_k=1, mode="min"
 )
@@ -58,4 +65,5 @@ trainer.fit(model, train_dataloader, validation_dataloader)
 # save best model as model weights
 checkpoint = torch.load(os.path.join(checkpoint_path, "best-checkpoint.ckpt"))
 state = {key[6:]: value for key, value in checkpoint["state_dict"].items()}
-torch.save(state, "/gcs/mlops_project/models/saved_models/bsc_weights.pth")
+weight_path = os.path.join(checkpoint_path, "best-checkpoint.pth")
+torch.save(state, weight_path)

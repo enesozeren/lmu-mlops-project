@@ -82,7 +82,7 @@ steps:
       [
         "storage",
         "cp",
-        "gs://data_bucket_lmu/mlops_project/models/saved_models/bsc_weights.pth",
+        "gs://data_bucket_lmu/checkpoints/best-checkpoint.pth",
         "mlops_project/models/saved_models/bsc_weights.pth",
       ]
   - name: "gcr.io/cloud-builders/docker"

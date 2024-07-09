@@ -9,5 +9,3 @@ workerPoolSpecs:
     env:
       - name: WANDB_API_KEY
         value: $WANDB_API_KEY
-      # - name: PJRT_DEVICE
-      #   value: GPU

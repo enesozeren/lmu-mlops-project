@@ -7,7 +7,10 @@ from pytorch_lightning.callbacks import ModelCheckpoint  # , EarlyStopping
 from pytorch_lightning.loggers import WandbLogger
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler, TensorDataset
 
+import wandb
 from utils.utils_functions import get_datasets, tokenize_tweets
+
+wandb.login()
 
 # Hyperparameters
 BATCH_SIZE = 32

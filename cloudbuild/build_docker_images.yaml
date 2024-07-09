@@ -29,7 +29,6 @@ steps:
         "-f",
         "dockerfiles/train_model.dockerfile",
       ]
-    secretEnv: ["WANDB_API_KEY"]
   - name: "gcr.io/cloud-builders/docker"
     id: "Push train container image"
     waitFor: ["Build train container image"]

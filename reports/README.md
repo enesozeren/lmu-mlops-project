@@ -118,6 +118,8 @@ Enes Özeren (12788990)
 
 Julia Broden (12502042)
 
+Daniel Gloukhman (12864164)
+
 ### Question 3 (JULIA)
 > **What framework did you choose to work with and did it help you complete the project?**
 >
@@ -152,7 +154,15 @@ We used the third-party framework Transformers in our project. It provided multi
 >
 > Answer:
 
---- question 4 fill here ---
+
+We used `conda` for creating virtual environments and `pip` for managing dependencies. We manually crafted a `requirements.txt` file with all our dependencies. To have a smaller container size, we additionally outsourced  our developement dependencies to a separate file. To recreate our environment, run the following code in the root directory of this repository:
+
+```bash
+conda env create --file environment.yaml
+conda activate mlops_base
+pip install -r requirements.txt
+pip install -r requirements_dev.txt
+```
 
 ### Question 5 (DANIEL)
 

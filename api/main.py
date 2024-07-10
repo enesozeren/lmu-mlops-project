@@ -6,7 +6,7 @@ import torch
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from transformers import BertForSequenceClassification, BertTokenizer
 
-MODEL_PATH = os.path.join("mlops_project", "models", "saved_models", "bsc_weights.pth")
+MODEL_PATH = os.path.join("mlops_project", "checkpoints", "best-checkpoint.pth")
 
 
 @asynccontextmanager
@@ -20,9 +20,9 @@ async def lifespan(app: FastAPI):
     model = BertForSequenceClassification.from_pretrained(
         "bert-base-uncased", num_labels=2, output_attentions=False, output_hidden_states=False
     )
-    model.load_state_dict(torch.load(MODEL_PATH))
-    model.eval()
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
+    model.eval()
     model.to(device)
 
     # Set the model and tokenizer in the app state

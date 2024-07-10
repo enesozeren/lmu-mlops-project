@@ -2,10 +2,10 @@
 data/raw/*.txt
 
 # outputs
-outputs/predictions/*.pt
+outputs/predictions/*.txt
 
-# Models
-mlops_project/models/*.pth
+# model weights
+mlops_project/checkpoints
 
 # Docs
 docs/site/

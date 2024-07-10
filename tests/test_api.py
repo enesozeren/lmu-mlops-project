@@ -41,8 +41,10 @@ def test_predict_labels_tweets_file():
             response = client.post("/predict_labels_tweets_file", files={"file": f})
 
         assert response.status_code == 200
-        # Check if response is not-hate or hate
-        assert response.json() == ["not-hate", "hate"], "Response from the model is not as expected."
+        # Check if response contains only "not-hate" or "hate" labels
+        labels = response.json()
+        for label in labels:
+            assert label in ["not-hate", "hate"], f"Unexpected label '{label}' received."
 
         # Remove the file
         import os

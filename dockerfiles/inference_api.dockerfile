@@ -1,13 +1,15 @@
 # Base image
 FROM hatespeech-base
 
+# Set the working directory in the container
+WORKDIR /lmu-mlops-project
+
 # Copy the necessary files
 COPY api/ api/
-COPY mlops_project/models mlops_project/models
+COPY mlops_project/checkpoints mlops_project/checkpoints
 
-# Set the working directory
-WORKDIR /
-
+# Set environment variable
+ENV PYTHONPATH=/lmu-mlops-project
 
 # Make port available to the world outside this container
 EXPOSE $PORT

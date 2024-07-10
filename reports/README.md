@@ -411,6 +411,7 @@ we have created a docker file for our fastapi app (also tested this locally). Th
 with the docker container. And this container behind our Cloud Run API is also automatically build and updated with our
 continuous cloud integration. To invoke our API with a single sample one can use:
 *`curl -X POST https://hate-speech-detection-cloudrun-api-sjx4y77sda-ey.a.run.app/predict_labels_one_tweet -F "tweet=this is my twwetttt"`*
+You can also see the load tests with locust package in this figure: [API Load Test](figures/api_load_test.png)
 
 ### Question 23 (ENES)
 

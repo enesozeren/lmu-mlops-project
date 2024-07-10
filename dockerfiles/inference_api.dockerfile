@@ -15,4 +15,4 @@ ENV PYTHONPATH=/lmu-mlops-project
 EXPOSE $PORT
 
 # Run the command to start uWSGI with the specified port and host
-CMD exec uvicorn api.main:app --port $PORT --host 0.0.0.0
+ENTRYPOINT ["uvicorn", "api.main:app", "--port", "$PORT", "--host", "0.0.0.0"]

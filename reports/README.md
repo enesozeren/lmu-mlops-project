@@ -177,7 +177,7 @@ pip install -r requirements_dev.txt
 > *experiments.*
 > Answer:
 
---- question 5 fill here ---
+We have used cookiecutter with MLOPs Template. We removed some folders that were not needed for our project. We explain all the folders in our project [README.md](/README.md). We added the `cloudbuild`, `dockerfiles`, `utils`, `api` directories and couple of custom scripts.
 
 ### Question 6 (DANIEL)
 
@@ -258,7 +258,7 @@ we have only used 1 version of the dataset.
 >
 > Answer:
 
-We use `Github Actions` in combination with `Google Cloudbuild` for continious integration and deployment. In order to ensure that a new feature doesn't introduce any bugs with the codebase we run all tests when a pull request is created via a github action workflow. After a pullrequest is merged another [action](https://github.com/enesozeren/lmu-mlops-project/blob/main/.github/workflows/trigger-cloudbuild.yaml) is triggering the building of all docker containers, the training of the model with `Vertex AI` and deployment of the resulting model.
+We use `Github Actions` in combination with `Google Cloudbuild` for continious integration and deployment. In order to ensure that a new feature doesn't introduce any bugs with the codebase we run all [unittests](https://github.com/enesozeren/lmu-mlops-project/actions/runs/9879223038/job/27284970551) when a pull request is created via a github action workflow. After a pullrequest is merged another [action](https://github.com/enesozeren/lmu-mlops-project/blob/main/.github/workflows/trigger-cloudbuild.yaml) is triggering the building of all docker containers, the training of the model with `Vertex AI` and deployment of the resulting model.
 
 ## Running code and tracking experiments
 
@@ -357,6 +357,7 @@ We have used the following GCP services: Bucket, Artifact Storage, Build, Run, C
 - GCP Run: for serving our inference api and updating the docker image behind our API with our continuous integration set up.
 - GCP Compute Engine: Used for training our model with GPUs.
 - GCP Vertex AI: Used for automatically training our model everytime a PR is merged with our continuous integration.
+- GCP Secret Manager for passing api keys to the docker images
 
 ### Question 18 (DANIEL)
 
@@ -371,7 +372,7 @@ We have used the following GCP services: Bucket, Artifact Storage, Build, Run, C
 >
 > Answer:
 
-Since training on CPU takes a long time we have used a `n1-standard-8` machine with a `NVIDIA_TESLA_T4` GPU as an accelerator. We used the virtual machine mainly for testing and devloping our training script. After the developement we packed the script into a docker container and run the training in `Vertex Ai` with workers having the same specification.
+Since training on CPU takes a long time we have used a `n1-standard-8` machine with a `NVIDIA_TESLA_T4` GPU as an accelerator. We used the virtual machine mainly for testing and devloping our training script. After the developement we packed the script into a docker container and run the training in `Vertex Ai` with workers having the same specification. Also another advantage of the VMs was the faster link to our container registry.
 
 ### Question 19 (ENES)
 

@@ -24,7 +24,7 @@ Currently large language models has the state-of-the-art results for most NLP ta
 ├── api                                         <- Has scripts to create a FastAPI for inference
 │   ├── __init__.py
 │   └── main.py
-├── cloudbuild.yaml                             <- Used for continuous integration with GCP
+├── cloudbuild                                  <- Directory for continious integration with GCP
 ├── data                                        <- Contains data and dvc file
 │   ├── raw
 │   └── raw.dvc
@@ -54,6 +54,7 @@ Currently large language models has the state-of-the-art results for most NLP ta
 │   ├── figures
 │   └── report.py
 ├── requirements.txt                            <- requirements for inference
+├── environment.yaml                            <- file to recreate the conda env
 ├── requirements_dev.txt                        <- requirements for development
 ├── tests                                       <- Contains unit tests and api load tests
 │   ├── __init__.py

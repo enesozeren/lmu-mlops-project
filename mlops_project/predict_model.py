@@ -1,9 +1,11 @@
-import os
-import torch
 import argparse
-from transformers import BertForSequenceClassification, BertTokenizer
-from utils.utils_functions import read_dataset
+import os
 from datetime import datetime
+
+import torch
+from transformers import BertForSequenceClassification, BertTokenizer
+
+from utils.utils_functions import read_dataset
 
 
 def predict(model_path: str, dataset_path: str) -> None:

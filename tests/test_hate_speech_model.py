@@ -1,6 +1,7 @@
-from mlops_project.hate_speech_model import HatespeechModel
-from transformers import BertTokenizer
 import torch
+from transformers import BertTokenizer
+
+from mlops_project.hate_speech_model import HatespeechModel
 
 
 def test_training_step():

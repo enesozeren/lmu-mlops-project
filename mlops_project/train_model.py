@@ -88,8 +88,8 @@ def main():
         precision="16-mixed",  # computations in 16-bit to speed up training, model weights in 32-bit to maintain accuracy
         deterministic=True,
         max_epochs=wandb.config.EPOCHS,
-        limit_train_batches=0.04,
-        limit_val_batches=0.04,
+        # limit_train_batches=0.04,
+        # limit_val_batches=0.04,
         logger=WandbLogger(project="hate_speech_detection"),
         callbacks=[checkpoint_callback],  # , early_stopping_callback
     )

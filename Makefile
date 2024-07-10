@@ -35,14 +35,17 @@ clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
-
-#################################################################################
-# PROJECT RULES                                                                 #
-#################################################################################
-
 ## Get the data
 raw_data:
 	python $(PROJECT_NAME)/data/make_dataset.py
+
+## Train the model
+train:
+	python $(PROJECT_NAME)/train_model.py --config=mlops_project/config/config-defaults.yaml
+
+## Run the api
+api:
+	uvicorn --port 8000 api.main:app
 
 #################################################################################
 # Documentation RULES                                                           #

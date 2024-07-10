@@ -42,9 +42,8 @@ Currently large language models has the state-of-the-art results for most NLP ta
 │   ├── data
 │   │   └── make_dataset.py                     <- To get the data from the original source
 │   ├── hate_speech_model.py                    <- Model
-│   ├── models
-│   │   └── saved_models                        <- Contains the trained model weigts (tracked with dvc)
-│   ├── models.dvc
+│   ├── checkpoints                             <- Contains the trained model weigts (tracked with dvc)
+│   ├── checkpoints.dvc
 │   ├── predict_model.py                        <- Script for prediction with trained model weights
 │   └── train_model.py                          <- Script for training
 ├── outputs
@@ -117,11 +116,6 @@ docker build -f dockerfiles/hatespeech_base.dockerfile . -t hatespeech-base:late
 To build the docker image for inference api, use
 ```bash
 docker build -f dockerfiles/inference_api.dockerfile . -t inference_api:latest
-```
-
-(OR) To make sure your image has amd64 architecture (necessary for google cloud), you can use:
-```bash
-docker buildx build --platform linux/amd64 -f dockerfiles/inference_api.dockerfile . -t inference_api:latest
 ```
 
 ### Running Docker Containers

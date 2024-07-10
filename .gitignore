@@ -4,6 +4,9 @@ data/raw/*.txt
 # outputs
 outputs/predictions/*.txt
 
+# model weights
+mlops_project/checkpoints
+
 # Docs
 docs/site/
 

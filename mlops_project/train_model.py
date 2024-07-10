@@ -15,8 +15,6 @@ import wandb
 from utils.utils_functions import get_datasets, tokenize_tweets
 
 wandb.login()
-
-
 # Get the training, validation, and test datasets
 (train_tweets, train_labels), (val_tweets, val_labels), (test_tweets, test_labels) = get_datasets()
 

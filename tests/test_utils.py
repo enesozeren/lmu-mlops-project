@@ -1,6 +1,8 @@
-from unittest.mock import patch, mock_open
+from unittest.mock import mock_open, patch
+
 from transformers import BertTokenizer
-from utils.utils_functions import read_dataset, get_datasets, preprocessing, tokenize_tweets
+
+from utils.utils_functions import get_datasets, preprocessing, read_dataset, tokenize_tweets
 
 
 # Test function for read_dataset without labels

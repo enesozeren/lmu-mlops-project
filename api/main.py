@@ -1,9 +1,10 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException
-from http import HTTPStatus
-from contextlib import asynccontextmanager
-import torch
-from transformers import BertForSequenceClassification, BertTokenizer
 import os
+from contextlib import asynccontextmanager
+from http import HTTPStatus
+
+import torch
+from fastapi import FastAPI, File, HTTPException, UploadFile
+from transformers import BertForSequenceClassification, BertTokenizer
 
 MODEL_PATH = os.path.join("mlops_project", "models", "saved_models", "bsc_weights.pth")
 

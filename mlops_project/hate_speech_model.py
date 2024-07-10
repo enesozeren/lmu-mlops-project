@@ -1,5 +1,5 @@
-from pytorch_lightning import LightningModule
 import torch
+from pytorch_lightning import LightningModule
 from torchmetrics.classification import Accuracy, Precision, Recall, Specificity
 from transformers import BertForSequenceClassification
 

@@ -3,9 +3,7 @@ FROM hatespeech-base
 
 COPY pyproject.toml pyproject.toml
 COPY mlops_project/ mlops_project/
-COPY data/ data/
+COPY utils/ mlops_project/utils/
 
-WORKDIR /
-RUN pip install . --no-deps --no-cache-dir
-
-ENTRYPOINT ["python", "-u", "mlops_project/train_model.py"]
+WORKDIR /mlops_project
+ENTRYPOINT ["python3", "-u", "train_model.py"]

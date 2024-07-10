@@ -1,8 +1,8 @@
 # Base image
-FROM python:3.12.3-slim
+FROM nvidia/cuda:12.5.0-runtime-ubuntu22.04
 
 RUN apt update && \
-    apt install --no-install-recommends -y build-essential gcc && \
+    apt install --no-install-recommends -y python3-pip && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt requirements.txt

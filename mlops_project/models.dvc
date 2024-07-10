@@ -14,5 +14,5 @@ outs:
     size: 438014740
     cloud:
       gcloud:
-        etag: 0888cedfcae5f286031001
-        version_id: '1719182418241288'
+        etag: 089cf7cde3a19a87031001
+        version_id: '1720538606304156'

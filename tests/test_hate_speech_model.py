@@ -19,7 +19,7 @@ def test_training_step():
     batch = (input_ids, attention_mask, labels)
 
     # When
-    model = HatespeechModel()
+    model = HatespeechModel(0.01)
     loss = model.training_step(batch)
     # Then
     assert isinstance(loss, torch.Tensor)

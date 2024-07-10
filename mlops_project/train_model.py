@@ -1,15 +1,20 @@
-import torch
 import argparse
-import yaml
-import wandb
+import os
 import random
+
 import numpy
-from utils.utils_functions import get_datasets, tokenize_tweets
-from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
-from pytorch_lightning.callbacks import ModelCheckpoint  # , EarlyStopping
-from pytorch_lightning import Trainer, seed_everything
-from pytorch_lightning.loggers import WandbLogger
+import torch
+import yaml
 from hate_speech_model import HatespeechModel
+from pytorch_lightning import Trainer, seed_everything
+from pytorch_lightning.callbacks import ModelCheckpoint  # , EarlyStopping
+from pytorch_lightning.loggers import WandbLogger
+from torch.utils.data import DataLoader, RandomSampler, SequentialSampler, TensorDataset
+
+import wandb
+from utils.utils_functions import get_datasets, tokenize_tweets
+
+wandb.login()
 
 
 # Get the training, validation, and test datasets
@@ -93,6 +98,17 @@ def main():
 
     # Train the model
     trainer.fit(model, train_dataloader, validation_dataloader)
+    # save best model as model weights
+    CLOUD_BUCKET = "data_bucket_lmu"
+    checkpoint_path = (
+        os.path.join("/gcs", CLOUD_BUCKET, "checkpoints")
+        if os.path.exists("/gcs/data_bucket_lmu/")
+        else "mlops_project/checkpoints"
+    )
+    checkpoint = torch.load(os.path.join(checkpoint_path, "best-checkpoint.ckpt"))
+    state = {key[6:]: value for key, value in checkpoint["state_dict"].items()}
+    weight_path = os.path.join(checkpoint_path, "best-checkpoint.pth")
+    torch.save(state, weight_path)
 
 
 wandb.agent(sweep_id, function=main, count=3)

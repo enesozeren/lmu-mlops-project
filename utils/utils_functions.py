@@ -1,6 +1,7 @@
 import os
-from transformers import BertTokenizer
+
 import torch
+from transformers import BertTokenizer
 
 
 def read_dataset(tweets_file, labels_file=None):
@@ -33,7 +34,7 @@ def get_datasets():
     Returns a tuple of tuples in the following order: ((train_tweets, train_labels), (val_tweets, val_labels), (test_tweets, test_labels))
     """
 
-    data_dir = "data/raw"
+    data_dir = "data/raw" if not os.path.exists("/gcs/data_bucket_lmu/") else "/gcs/data_bucket_lmu/data/raw"
 
     # Load train, validation, and test datasets
     train_tweets, train_labels = read_dataset(

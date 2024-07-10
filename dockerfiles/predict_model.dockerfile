@@ -18,7 +18,7 @@ ENV PYTHONPATH=/lmu-mlops-project
 RUN pip install . --no-deps --no-cache-dir
 
 # Set the entrypoint to the python script
-ENTRYPOINT ["python", "-u", "mlops_project/predict_model.py"]
+ENTRYPOINT ["python3", "-u", "mlops_project/predict_model.py"]
 
 # Provide default arguments that can be overridden
 CMD ["--model_path", "mlops_project/models/saved_models/bsc_weights.pth", \

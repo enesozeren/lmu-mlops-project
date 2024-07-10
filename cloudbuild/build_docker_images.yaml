@@ -1,21 +1,12 @@
 steps:
-  - id: get-git-history
-    name: gcr.io/cloud-builders/git
-    entrypoint: bash
-    args:
-      - "-c"
-      - |
-        git clone https://github.com/enesozeren/lmu-mlops-project.git --no-checkout
-        mv lmu-mlops-project/.git .
-        git fetch --unshallow
-        rm -rf lmu-mlops-project
-  - name: python:slim
-    entrypoint: bash
-    args: ["-c", "pip install -U dvc dvc[gs]; dvc pull;"]
-    id: Model_Pull
+  - name: "gcr.io/cloud-builders/gcloud"
+    id: "pull bucket data"
+    waitFor: ["-"]
+    args: ["storage", "rsync", "-r", "gs://data_bucket_lmu/data/", "data"]
 
   - name: "gcr.io/cloud-builders/docker"
     id: "Build hatespeech-base image"
+    waitFor: ["-"]
     args:
       [
         "build",
@@ -28,6 +19,7 @@ steps:
 
   - name: "gcr.io/cloud-builders/docker"
     id: "Build train container image"
+    waitFor: ["Build hatespeech-base image", "pull bucket data"]
     args:
       [
         "build",
@@ -37,9 +29,33 @@ steps:
         "-f",
         "dockerfiles/train_model.dockerfile",
       ]
+  - name: "gcr.io/cloud-builders/docker"
+    id: "Push train container image"
+    waitFor: ["Build train container image"]
+    args:
+      [
+        "push",
+        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeech-detection-docker-repo/train-model:latest",
+      ]
 
+  - name: "gcr.io/cloud-builders/gcloud"
+    id: "trigger training with vertex-ai"
+    waitFor: ["Push train container image"]
+    args: ["builds", "submit", "--config=cloudbuild/vertex_ai_train.yaml", "."]
+
+  - name: "gcr.io/cloud-builders/gcloud"
+    id: "pull bucket modelweights"
+    waitFor: ["-"]
+    args:
+      [
+        "storage",
+        "cp",
+        "gs://data_bucket_lmu/checkpoints/best-checkpoint.pth",
+        "mlops_project/models/saved_models/bsc_weights.pth",
+      ]
   - name: "gcr.io/cloud-builders/docker"
     id: "Build inference api container image"
+    waitFor: ["Build hatespeech-base image", "pull bucket modelweights"]
     args:
       [
         "build",
@@ -51,6 +67,12 @@ steps:
       ]
   - name: "gcr.io/cloud-builders/docker"
     id: "Build predict container image"
+    waitFor:
+      [
+        "Build hatespeech-base image",
+        "pull bucket modelweights",
+        "pull bucket data",
+      ]
     args:
       [
         "build",
@@ -61,8 +83,18 @@ steps:
         "dockerfiles/predict_model.dockerfile",
       ]
 
+  - name: "gcr.io/cloud-builders/docker"
+    id: "Push inference container image"
+    waitFor: ["Build inference api container image"]
+    args:
+      [
+        "push",
+        "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeech-detection-docker-repo/inference-api:latest",
+      ]
+
   - name: "gcr.io/cloud-builders/gcloud"
     id: "Deploy inference api docker container to Cloud Run"
+    waitFor: ["Push inference container image"]
     args:
       [
         "run",
@@ -80,6 +112,6 @@ options:
   logging: CLOUD_LOGGING_ONLY
 
 images:
-  - "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeech-detection-docker-repo/train-model"
-  - "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeech-detection-docker-repo/inference-api"
+  # - "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeech-detection-docker-repo/train-model"
+  # - "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeech-detection-docker-repo/inference-api"
   - "europe-west3-docker.pkg.dev/$PROJECT_ID/hatespeech-detection-docker-repo/predict-model"

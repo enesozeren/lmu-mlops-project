@@ -29,6 +29,7 @@ steps:
         "-f",
         "dockerfiles/train_model.dockerfile",
       ]
+
   - name: "gcr.io/cloud-builders/docker"
     id: "Push train container image"
     waitFor: ["Build train container image"]
@@ -51,8 +52,9 @@ steps:
         "storage",
         "cp",
         "gs://data_bucket_lmu/checkpoints/best-checkpoint.pth",
-        "mlops_project/models/saved_models/bsc_weights.pth",
+        "mlops_project/checkpoints/bsc_weights.pth",
       ]
+
   - name: "gcr.io/cloud-builders/docker"
     id: "Build inference api container image"
     waitFor: ["Build hatespeech-base image", "pull bucket modelweights"]
@@ -65,6 +67,7 @@ steps:
         "-f",
         "dockerfiles/inference_api.dockerfile",
       ]
+
   - name: "gcr.io/cloud-builders/docker"
     id: "Build predict container image"
     waitFor:

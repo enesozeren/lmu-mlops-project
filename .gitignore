@@ -2,10 +2,7 @@
 data/raw/*.txt
 
 # outputs
-outputs/predictions/*.pt
-
-# Models
-mlops_project/models/*.pth
+outputs/predictions/*.txt
 
 # Docs
 docs/site/

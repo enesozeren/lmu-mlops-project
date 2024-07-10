@@ -60,7 +60,24 @@ if __name__ == "__main__":
     # Run prediction
     predictions = predict(args.model_path, args.dataset_path)
 
-    # Save predictions
+    # Convert predictions to numpy for easy handling
+    predictions_np = predictions.cpu().numpy()
+
+    # Define label mapping
+    label_map = {0: "not-hate", 1: "hate"}
+
+    # Get the predicted labels
+    predicted_labels = predictions_np.argmax(axis=1)
+
+    # Save predictions and labels to a text file
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    PREDICTION_PATH = os.path.join("outputs", "predictions", f"predictions_{current_time}.pt")
-    torch.save(predictions, PREDICTION_PATH)
+    PREDICTION_PATH = os.path.join("outputs", "predictions", f"predictions_{current_time}.txt")
+
+    os.makedirs(os.path.dirname(PREDICTION_PATH), exist_ok=True)
+
+    with open(PREDICTION_PATH, "w") as f:
+        f.write("Probability_Label_0, Probability_Label_1, Predicted_Label\n")
+        for probs, label in zip(predictions_np, predicted_labels):
+            f.write(f"{probs[0]:.4f}, {probs[1]:.4f}, {label_map[label]}\n")
+
+    print(f"Predictions saved to {PREDICTION_PATH}")

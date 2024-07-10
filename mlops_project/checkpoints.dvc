@@ -1,6 +1,11 @@
 outs:
-- md5: e11bed3863626fe4f5e39446fcb025c5.dir
-  size: 4380159872
-  nfiles: 4
-  hash: md5
+- hash: md5
   path: checkpoints
+  files:
+  - relpath: best-checkpoint.pth
+    md5: 9f6e8e7e6e99748a209ffa42a0b88372
+    size: 438001544
+    cloud:
+      gcloud:
+        etag: 08efdd94f5b39c87031001
+        version_id: '1720612194430703'

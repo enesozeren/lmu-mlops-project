@@ -109,6 +109,8 @@ def main():
     state = {key[6:]: value for key, value in checkpoint["state_dict"].items()}
     weight_path = os.path.join(checkpoint_path, "best-checkpoint.pth")
     torch.save(state, weight_path)
+    # remove ckpt file
+    os.remove(os.path.join(checkpoint_path, "best-checkpoint.ckpt"))
 
 
 wandb.agent(sweep_id, function=main, count=3)

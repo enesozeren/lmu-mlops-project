@@ -52,7 +52,7 @@ steps:
         "storage",
         "cp",
         "gs://data_bucket_lmu/checkpoints/best-checkpoint.pth",
-        "mlops_project/checkpoints/bsc_weights.pth",
+        "mlops_project/checkpoints/best-checkpoint.pth",
       ]
 
   - name: "gcr.io/cloud-builders/docker"

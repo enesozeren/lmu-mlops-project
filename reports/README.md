@@ -188,7 +188,8 @@ pip install -r requirements_dev.txt
 >
 > Answer:
 
---- question 6 fill here ---
+We implemented a pre-commit pipeline to enforce code linting and formatting with `ruff`. Additionally everyone used the `isort` extension in their local vscode instance. We also followed the pep8 style guide for python-code. When working in a team it is important to enforce those rules to have a uniform codebase. And thus make it easier for other team-members to onboard and work with the code.
+
 
 ## Version control
 
@@ -257,7 +258,7 @@ we have only used 1 version of the dataset.
 >
 > Answer:
 
---- question 11 fill here ---
+We use `Github Actions` in combination with `Google Cloudbuild` for continious integration and deployment. In order to ensure that a new feature doesn't introduce any bugs with the codebase we run all tests when a pull request is created via a github action workflow. After a pullrequest is merged another [action](https://github.com/enesozeren/lmu-mlops-project/blob/main/.github/workflows/trigger-cloudbuild.yaml) is triggering the building of all docker containers, the training of the model with `Vertex AI` and deployment of the resulting model.
 
 ## Running code and tracking experiments
 
@@ -323,7 +324,11 @@ we have only used 1 version of the dataset.
 >
 > Answer:
 
---- question 15 fill here ---
+For our project we developed several images: one base image for all other images, one for training, one for local prediction and one for serving an api. Using a base image allowed us to reduce the buildtime considerably, as all images have the same dependcies. All dockerfiles are stored in the dedicated `/dockerfiles` directory. Running an experiment with different hyperparametes can simply be done by creating another config file. For example to run the [training container](https://github.com/enesozeren/lmu-mlops-project/blob/main/dockerfiles/train_model.dockerfile) run the following command in the terminal:
+
+```docker
+docker run -e WANDB_API_KEY=XXXXX -it -v $(pwd)/data:/mlops_project/data europe-west3-docker.pkg.dev/lmumlops/hatespeech-detection-docker-repo/train-model --config config/config-defaults-sweep.yaml
+```
 
 ### Question 16 (ENES)
 
@@ -366,7 +371,7 @@ We have used the following GCP services: Bucket, Artifact Storage, Build, Run, C
 >
 > Answer:
 
---- question 18 fill here ---
+Since training on CPU takes a long time we have used a `n1-standard-8` machine with a `NVIDIA_TESLA_T4` GPU as an accelerator. We used the virtual machine mainly for testing and devloping our training script. After the developement we packed the script into a docker container and run the training in `Vertex Ai` with workers having the same specification.
 
 ### Question 19 (ENES)
 
@@ -430,7 +435,8 @@ those, we can make sure that our model is still suitable for the usage after tim
 >
 > Answer:
 
---- question 24 fill here ---
+We spent around US$9.26 dollar. The service costing the most was the Compute Engine  (with GPU).
+![Google cloud spending](figures/gcloud_costs.png "Google cloud spending")
 
 ## Overall discussion of project
 

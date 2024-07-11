@@ -162,7 +162,7 @@ pip install -r requirements.txt
 pip install -r requirements_dev.txt
 ```
 
-### Question 5 (DANIEL)
+### Question 5
 
 > **We expect that you initialized your project using the cookiecutter template. Explain the overall structure of your**
 > **code. Did you fill out every folder or only a subset?**
@@ -177,7 +177,7 @@ pip install -r requirements_dev.txt
 
 We have used cookiecutter with MLOPs Template. We removed some folders that were not needed for our project. We explain all the folders in our project [README.md](/README.md). We added the `cloudbuild`, `dockerfiles`, `utils`, `api` directories and couple of custom scripts.
 
-### Question 6 (DANIEL)
+### Question 6
 
 > **Did you implement any rules for code quality and format? Additionally, explain with your own words why these**
 > **concepts matters in larger projects.**
@@ -194,7 +194,7 @@ We implemented a pre-commit pipeline to enforce code linting and formatting with
 > In the following section we are interested in how version control was used in your project during development to
 > corporate and increase the quality of your code.
 
-### Question 7 (ENES)
+### Question 7
 
 > **How many tests did you implement and what are they testing in your code?**
 >
@@ -203,7 +203,7 @@ We implemented a pre-commit pipeline to enforce code linting and formatting with
 We have implemented 17 tests. Our focus was testing dataset, training, prediction, api and util functions which
 are the core scripts for our repo.
 
-### Question 8 (ENES)
+### Question 8
 
 > **What is the total code coverage (in percentage) of your code? If you code had an code coverage of 100% (or close**
 > **to), would you still trust it to be error free? Explain you reasoning.**
@@ -214,7 +214,7 @@ Total coverage of code is 85%. We are not too close to 100% becuase of the chall
 the training and prediction scripts. Even we covered 100%, we still can not be sure all the code is error free becuase
 the coverage only measures if everyline is tested, but there can be other edge scenarios or some logic errors.
 
-### Question 9 (JULIA)
+### Question 9
 
 > **Did you workflow include using branches and pull requests? If yes, explain how. If not, explain how branches and**
 > **pull request can help improve version control.**
@@ -227,9 +227,10 @@ the coverage only measures if everyline is tested, but there can be other edge s
 >
 > Answer:
 
---- question 9 fill here ---
+We made use of both branches and PRs in our project. Each member of our group had a personal branch where they worked on their features or bug fixes independently of the main branch. This setup allowed us to develop and test our changes without affecting the main codebase. To merge code, a member would create a PR once their feature was complete and tested. Other team members would then review the PR, providing feedback or requesting modifications if necessary. A reviewer would then approve the PR and merge it into the main branch. If merge conflicts arose, they would be resolved collaboratively to make sure that all changes were correctly integrated and nothing was lost. In addition, tests are performed before merging a branch into the main branch to verify that the code remains functional after the merge.
 
-### Question 10 (ENES)
+
+### Question 10
 
 > **Did you use DVC for managing data in your project? If yes, then how did it improve your project to have version**
 > **control of your data. If no, explain a case where it would be beneficial to have version control of your data.**
@@ -241,7 +242,7 @@ storing big files. Especially our model weight files are much bigger than we can
 was a great solution as well. Also DVC is great for versioning the dataset used for training but throughout our project
 we have only used 1 version of the dataset.
 
-### Question 11 (DANIEL)
+### Question 11
 
 > **Discuss you continuous integration setup. What kind of continuous integration are you running (unittesting,**
 > **linting, etc.)? Do you test multiple operating systems, Python  version etc. Do you make use of caching? Feel free**
@@ -263,7 +264,7 @@ We use `Github Actions` in combination with `Google Cloudbuild` for continious i
 > In the following section we are interested in learning more about the experimental setup for running your code and
 > especially the reproducibility of your experiments.
 
-### Question 12 (JULIA)
+### Question 12
 
 > **How did you configure experiments? Did you make use of config files? Explain with coding examples of how you would**
 > **run a experiment.**
@@ -275,9 +276,16 @@ We use `Github Actions` in combination with `Google Cloudbuild` for continious i
 >
 > Answer:
 
---- question 12 fill here ---
+When training the model the hyperparameters are passed using `argparser`, i.e.
 
-### Question 13 (JULIA)
+```bash
+python mlops_project/train_model.py --config=mlops_project/config/config-defaults-sweep.yaml
+```
+
+We implemented hyperparameter tuning using W&B sweeps. A sweep is bassed to the `wandb.agent`. The search method such as grid search or random serach can be chosen. The configuration file contains the batch size, number of epochs, and the learning rate. The experiments were logged through `WandbLogger`.
+
+
+### Question 13
 
 > **Reproducibility of experiments are important. Related to the last question, how did you secure that no information**
 > **is lost when running experiments and that your experiments are reproducible?**
@@ -290,9 +298,10 @@ We use `Github Actions` in combination with `Google Cloudbuild` for continious i
 >
 > Answer:
 
---- question 13 fill here ---
+We made our experiments reproducible by (1) utilizing configuration files to specify hyperparameters for each experiment. (2) We ensure deterministic behavior by setting a fixed random seed (`seed_everything`, `torch.manual_seed`) across all experiments. Additionally, we implement a function (`seed_worker`) to manage seeds for parallel workers. (3) Docker images ensure that our model can be run on all computers. (4) We log experiment with W&B.
 
-### Question 14 (JULIA)
+
+### Question 14
 
 > **Upload 1 to 3 screenshots that show the experiments that you have done in W&B (or another experiment tracking**
 > **service of your choice). This may include loss graphs, logged images, hyperparameter sweeps etc. You can take**
@@ -307,7 +316,11 @@ We use `Github Actions` in combination with `Google Cloudbuild` for continious i
 >
 > Answer:
 
---- question 14 fill here ---
+As seen in the first image when have tracked training loss, training accuracy, validation loss, validation accuracy, validation recall, and validation precision.
+![wandb metrics](figures/Q14-1.png "wandb metric")
+
+![wandb sweep](figures/Q14-2.png "wandb sweep")
+
 
 ### Question 15 (DANIEL)
 

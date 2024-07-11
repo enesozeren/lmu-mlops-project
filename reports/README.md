@@ -302,7 +302,7 @@ We implemented hyperparameter tuning using W&B sweeps. A sweep is bassed to the 
 To guarantee the reproducibility of our experiments and prevent information loss, we implemented several key aspects:
 
 #### Controlling Randomness
-We established fixed seed values for potential sources of randomness, in particular for PyTorch torch.manual_seed(<seed>), Python's random module random.seed(<seed>) NumPy np.random.seed(<seed>) and PyTorch Lightning seed_everything(). Additionally, we developed a custom seed_worker function to manage seeds for parallel workers, ensuring consistency across multi-threaded operations.
+We established fixed seed values for potential sources of randomness, in particular for PyTorch `torch.manual_seed`, Python's random module `random.seed`, NumPy `np.random.seed` and PyTorch Lightning `seed_everything()`. Additionally, we developed a custom seed_worker function to manage seeds for parallel workers, ensuring consistency across multi-threaded operations.
 
 #### Hyperparameter Management
 We utilized config files to maintain fixed hyperparameter values throughout our experiments. This approach was also used in the hyperparameter tuning process, where we employed an exhaustive grid search method rather than random sampling, further enhancing reproducibility.
@@ -490,6 +490,19 @@ We spent around US$9.26 dollar. The service costing the most was the Compute Eng
 
 ![architecture overview](figures/architecture_overview.png "architecture overview")
 
+The architecture diagram begins with our local development environment, where we initiated our PyTorch application within the PyTorch Lightning framework. This marked the foundational step in our MLOps pipeline. The code structure was set with the MLOps template from cookiecutter. We utilized Git for version control, managing our codebase on GitHub. Dependencies were handled via Conda for environment setup and pip for package management.
+
+
+We integrated W&B with PyTorch Lightning for logging experiments and tracking training progress. Additionally, wandb facilitated the configuration of our training runs, ensuring consistency and reproducibility across experiments. These components were encapsulated within a Docker container to maintain a consistent and portable environment.
+
+
+To ensure robustness and reliability in our code, GitHub Actions were configured to automatically trigger testing procedures before pushing code to the remote repository. This helped maintain code quality and stability.
+For cloud-based operations, we worked with GCP. We utilized Git and Data Version Control (DVC) to manage and version datasets stored in GCP buckets, ensuring data integrity and reproducibility in experiments. Docker images were generated in cloud-based containers triggered by GitHub repository updates.
+
+
+During model training, data stored in GCP buckets was accessed and utilized. DVC facilitated data versioning and information sharing. To interface with our application, we worked with Cloud Run and the FastAPI framework, enabling efficient API interactions and seamless deployment of our models into production environments.
+
+
 ### Question 26
 
 > **Discuss the overall struggles of the project. Where did you spend most time and what did you do to overcome these**
@@ -530,8 +543,13 @@ were complicated to solve but we have come up with solutions by checking the doc
 unit tests and load test scripts for the api. Also developed the continuous integration for Cloud Run.
 - - Setting up the Github Actions for unit tests & credentials & rules of the repository (review requirements etc.).
 - Julia's Responsibilities:
-- - TBD
-- Daniel's Responsibilities: TBD
+- - Development of the ML Model in a standardized format with training steps and validation steps with Pytorch Lightning.
+- - Writing unit test for the training step of the ML Model.
+- - Separate parameters in a config file
+- - Add config file selection with argparse
+- - Implement hyperparameter tuning with weights and biases, i.e. sweeps
+- - Implement logging with weights and biases
+- Daniel's Responsibilities:
 - - Building a precommit pipeline for mantaining uniform formatting
 - - migrating dvc repository to google cloud bucket
 - - working with GCP

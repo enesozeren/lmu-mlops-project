@@ -111,4 +111,4 @@ def main():
     os.remove(os.path.join(checkpoint_path, "best-checkpoint.ckpt"))
 
 
-wandb.agent(sweep_id, function=main, count=3)
+wandb.agent(sweep_id, function=main, count=8)

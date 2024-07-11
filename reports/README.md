@@ -474,6 +474,8 @@ We spent around US$9.26 dollar. The service costing the most was the Compute Eng
 - Enes Comments: We had some struggles with the continuous integration with cloud. Sometimes erros about GCP permission
 were complicated to solve but we have come up with solutions by checking the documentation & some forums.
 
+- Daniel Comments: Since we have a lot of dependendcies wie large libraries our docker images became large in size. On the one hand this means building takes a long time but also dowloading and pushing the images from/to the registry takes a long time. We mitigated this issue a bit by using cloudbuild and pulling the images to the compute engine VMs that have a fast internet connection. This lead to a long bugfix cycle. Another issue was dealing with the IAM system of GCP that isn't always streight forward.
+
 ### Question 27 (ALL)
 
 > **State the individual contributions of each team member. This is required information from DTU, because we need to**
@@ -499,4 +501,9 @@ unit tests and load test scripts for the api. Also developed the continuous inte
 - Julia's Responsibilities:
 - - TBD
 - Daniel's Responsibilities: TBD
-- - TBD
+- - Building a precommit pipeline for mantaining uniform formatting
+- - migrating dvc repository to google cloud bucket
+- - working with GCP
+- - optimizing docker files and building them in the cloud
+- - building a continious integration and deployment pipeline with github actions and google cloudbuild
+- - running training in the cloud

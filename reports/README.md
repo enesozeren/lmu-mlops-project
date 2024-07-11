@@ -298,7 +298,22 @@ We implemented hyperparameter tuning using W&B sweeps. A sweep is bassed to the 
 >
 > Answer:
 
-We made our experiments reproducible by (1) utilizing configuration files to specify hyperparameters for each experiment. (2) We ensure deterministic behavior by setting a fixed random seed (`seed_everything`, `torch.manual_seed`) across all experiments. Additionally, we implement a function (`seed_worker`) to manage seeds for parallel workers. (3) Docker images ensure that our model can be run on all computers. (4) We log experiment with W&B.
+
+To guarantee the reproducibility of our experiments and prevent information loss, we implemented several key aspects:
+
+#### Controlling Randomness
+We established fixed seed values for potential sources of randomness, in particular for PyTorch torch.manual_seed(<seed>), Python's random module random.seed(<seed>) NumPy np.random.seed(<seed>) and PyTorch Lightning seed_everything(). Additionally, we developed a custom seed_worker function to manage seeds for parallel workers, ensuring consistency across multi-threaded operations.
+
+#### Hyperparameter Management
+We utilized config files to maintain fixed hyperparameter values throughout our experiments. This approach was also used in the hyperparameter tuning process, where we employed an exhaustive grid search method rather than random sampling, further enhancing reproducibility.
+
+#### Environment Consistency
+By using Docker containers, we ensured that all models were executed within identical environments, eliminating variations due to system-specific differences.
+
+#### Comprehensive Logging
+To save all relevant information during experiments, we integrated Weights & Biases as our logging tool. This allowed us to capture and store detailed metrics, model parameters, and experimental conditions.
+
+All in all, reproducible models helped us in the debugging process and with model comparability.
 
 
 ### Question 14
@@ -316,13 +331,16 @@ We made our experiments reproducible by (1) utilizing configuration files to spe
 >
 > Answer:
 
-As seen in the first image when have tracked training loss, training accuracy, validation loss, validation accuracy, validation recall, and validation precision.
+In our experiments tracked on W&B, we focus on monitoring essential metrics to assess model performance and optimize hyperparameters effectively. As seen in the first image we have tracked training loss, training accuracy, validation loss, validation accuracy, validation recall, and validation precision.
 ![wandb metrics](figures/Q14-1.png "wandb metric")
+We track training loss and training accuracy to measure how well the model fits the training data. These metrics help us understand the model's learning process and its ability to correctly classify training examples. Validation loss and validation accuracy are crucial indicators of how well the model generalizes to unseen data. They provide insights into whether the model is overfitting or underfitting. Additionally, validation recall and validation precision are tracked to evaluate the model's ability to correctly identify positive instances and the precision of these predictions. These metrics are essential for diagnosing model performance issues and ensuring that the model meets the desired standards of accuracy and reliability. They help us make informed decisions about model improvements and hyperparameter tuning, ensuring our models are robust and accurate.
 
+
+The second image shows the monitoring of a hyperparameter sweep, tuning the batch size, number of epochs and learning rate. By systematically varying these parameters and observing their impact on model performance, we aim to find the optimal configuration that minimizes the validation loss.
 ![wandb sweep](figures/Q14-2.png "wandb sweep")
 
 
-### Question 15 (DANIEL)
+### Question 15
 
 > **Docker is an important tool for creating containerized applications. Explain how you used docker in your**
 > **experiments? Include how you would run your docker images and include a link to one of your docker files.**
@@ -341,7 +359,7 @@ For our project we developed several images: one base image for all other images
 docker run -e WANDB_API_KEY=XXXXX -it -v $(pwd)/data:/mlops_project/data europe-west3-docker.pkg.dev/lmumlops/hatespeech-detection-docker-repo/train-model --config config/config-defaults-sweep.yaml
 ```
 
-### Question 16 (ENES)
+### Question 16
 
 > **When running into bugs while trying to run your experiments, how did you perform debugging? Additionally, did you**
 > **try to profile your code or do you think it is already perfect?**
@@ -355,7 +373,7 @@ from ready to use packages like pytorch-lightning.
 
 > In the following section we would like to know more about your experience when developing in the cloud.
 
-### Question 17 (ENES)
+### Question 17
 
 > **List all the GCP services that you made use of in your project and shortly explain what each service does?**
 >
@@ -370,7 +388,7 @@ We have used the following GCP services: Bucket, Artifact Storage, Build, Run, C
 - GCP Vertex AI: Used for automatically training our model everytime a PR is merged with our continuous integration.
 - GCP Secret Manager for passing api keys to the docker images
 
-### Question 18 (DANIEL)
+### Question 18
 
 > **The backbone of GCP is the Compute engine. Explained how you made use of this service and what type of VMs**
 > **you used?**
@@ -385,7 +403,7 @@ We have used the following GCP services: Bucket, Artifact Storage, Build, Run, C
 
 Since training on CPU takes a long time we have used a `n1-standard-8` machine with a `NVIDIA_TESLA_T4` GPU as an accelerator. We used the virtual machine mainly for testing and devloping our training script. After the developement we packed the script into a docker container and run the training in `Vertex Ai` with workers having the same specification. Also another advantage of the VMs was the faster link to our container registry.
 
-### Question 19 (ENES)
+### Question 19
 
 > **Insert 1-2 images of your GCP bucket, such that we can see what data you have stored in it.**
 >
@@ -394,7 +412,7 @@ Since training on CPU takes a long time we have used a `n1-standard-8` machine w
 See the image for our GCP Bucket ([GCP Bucket](figures/gcp_bucket.png)).
 We store our data and model weights in it ([Inside GCP Bucket](figures/inside_gcp_gucket.png)).
 
-### Question 20 (ENES)
+### Question 20
 
 > **Upload one image of your GCP artifact registry, such that we can see the different images that you have stored.**
 >
@@ -403,7 +421,7 @@ We store our data and model weights in it ([Inside GCP Bucket](figures/inside_gc
 See the image for our GCP Artifact Registry ([GCP Artifact Registry](figures/gcp_artifact_registry.png)).
 We store and continuously build our docker images in it ([Inside GCP Artifact Registry](figures/inside_gcp_artifact_registry.png)).
 
-### Question 21 (ENES)
+### Question 21
 
 > **Upload one image of your GCP cloud build history, so we can see the history of the images that have been build in**
 >
@@ -411,7 +429,7 @@ We store and continuously build our docker images in it ([Inside GCP Artifact Re
 
 See the image for our GCP Cloud Build history ([GCP Cloud Build History](figures/gcp_build.png)).
 
-### Question 22 (ENES)
+### Question 22
 
 > **Did you manage to deploy your model, either in locally or cloud? If not, describe why. If yes, describe how and**
 > **preferably how you invoke your deployed service?**
@@ -425,7 +443,7 @@ continuous cloud integration. To invoke our API with a single sample one can use
 *`curl -X POST https://hate-speech-detection-cloudrun-api-sjx4y77sda-ey.a.run.app/predict_labels_one_tweet -F "tweet=this is my twwetttt"`*
 You can also see the load tests with locust package in this figure: [API Load Test](figures/api_load_test.png)
 
-### Question 23 (ENES)
+### Question 23
 
 > **Did you manage to implement monitoring of your deployed model? If yes, explain how it works. If not, explain how**
 > **monitoring would help the longevity of your application.**
@@ -436,7 +454,7 @@ We did not manage to implement monitoring. But after starting to have some user 
 the input data & feature shift and the performance of our api would be very crucial for our application. By monitoring
 those, we can make sure that our model is still suitable for the usage after time, and also user's experience is as expected.
 
-### Question 24 (DANIEL)
+### Question 24
 
 > **How many credits did you end up using during the project and what service was most expensive?**
 >
@@ -455,7 +473,7 @@ We spent around US$9.26 dollar. The service costing the most was the Compute Eng
 
 > In the following section we would like you to think about the general structure of your project.
 
-### Question 25 (JULIA)
+### Question 25
 
 > **Include a figure that describes the overall architecture of your system and what services that you make use of.**
 > **You can take inspiration from [this figure](figures/overview.png). Additionally in your own words, explain the**
@@ -470,9 +488,9 @@ We spent around US$9.26 dollar. The service costing the most was the Compute Eng
 >
 > Answer:
 
---- question 25 fill here ---
+![architecture overview](figures/architecture_overview.png "architecture overview")
 
-### Question 26 (ALL)
+### Question 26
 
 > **Discuss the overall struggles of the project. Where did you spend most time and what did you do to overcome these**
 > **challenges?**
@@ -489,7 +507,7 @@ were complicated to solve but we have come up with solutions by checking the doc
 
 - Daniel Comments: Since we have a lot of dependendcies wie large libraries our docker images became large in size. On the one hand this means building takes a long time but also dowloading and pushing the images from/to the registry takes a long time. We mitigated this issue a bit by using cloudbuild and pulling the images to the compute engine VMs that have a fast internet connection. This lead to a long bugfix cycle. Another issue was dealing with the IAM system of GCP that isn't always streight forward.
 
-### Question 27 (ALL)
+### Question 27
 
 > **State the individual contributions of each team member. This is required information from DTU, because we need to**
 > **make sure all members contributed actively to the project**

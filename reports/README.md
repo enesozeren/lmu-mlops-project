@@ -109,7 +109,7 @@ curriculum in this course. Therefore, we do not expect at all that you have chec
 
 NaN
 
-### Question 2 (ALL)
+### Question 2
 > **Enter the study number for each member in the group**
 >
 > Answer:
@@ -120,7 +120,7 @@ Julia Broden (12502042)
 
 Daniel Gloukhman (12864164)
 
-### Question 3 (JULIA)
+### Question 3
 > **What framework did you choose to work with and did it help you complete the project?**
 >
 > Recommended answer length: 100-200 words.
@@ -131,17 +131,15 @@ Daniel Gloukhman (12864164)
 >
 > Answer:
 
-We used the third-party framework Transformers in our project. It provided multiple pretained models for the classification of our tweets
 
-*TODO*: List which models were used
-(BERT only?)
+We used the third-party framework `Transformers` from Hugging Face in our project. It provides the `BertForSequenceClassification` model, which is a natural language processing (NLP) model where we only need to fine-tune the classification layer for our purpose of hate speech detection. Furthermore, it provides the `BertTokenizer` with which we can tokenize the tweets. We worked with the `PyTorch Lightning` framework to train and validate our model, using the `Trainer` class. To track our model performance, we used `torchmetrics`. Weights and Biases was used both to handle the configuration file with the hyperparameters and to do hyperparameter sweeps, as well as for logging the training and validation loss and metrics.
 
 
 ## Coding environment
 
 > In the following section we are interested in learning more about you local development environment.
 
-### Question 4 (DANIEL)
+### Question 4
 
 > **Explain how you managed dependencies in your project? Explain the process a new team member would have to go**
 > **through to get an exact copy of your environment.**

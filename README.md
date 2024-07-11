@@ -103,7 +103,10 @@ https://hate-speech-detection-cloudrun-api-sjx4y77sda-ey.a.run.app/predict_label
 ```
 
 ## Training
-TBD
+To train the model, specify a hyperparameter yaml file and use
+```bash
+python mlops_project/train_model.py --config=mlops_project/config/config-defaults-sweep.yaml
+```
 
 ## Docker
 

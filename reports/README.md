@@ -518,6 +518,8 @@ During model training, data stored in GCP buckets was accessed and utilized. DVC
 - Enes Comments: We had some struggles with the continuous integration with cloud. Sometimes erros about GCP permission
 were complicated to solve but we have come up with solutions by checking the documentation & some forums.
 
+- Julias Comments: We encountered debugging issues within Visual Studio Code. For example, we had to implement a custom launch.json file, incorporating args attributes for parsing various configuration files for the hyperparameters. Also, the LightningModule from PyTorch Lightning forces us to use a more object-oriented programming style, which was difficult in the beginning, but ultimately led to more clean code. Furthermoe, we observed minor inaccuracies in the weights and biases documentation, so we mostly used the code examples to get a better feeling about its functionality.
+
 - Daniel Comments: Since we have a lot of dependendcies wie large libraries our docker images became large in size. On the one hand this means building takes a long time but also dowloading and pushing the images from/to the registry takes a long time. We mitigated this issue a bit by using cloudbuild and pulling the images to the compute engine VMs that have a fast internet connection. This lead to a long bugfix cycle. Another issue was dealing with the IAM system of GCP that isn't always streight forward.
 
 ### Question 27

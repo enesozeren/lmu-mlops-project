@@ -17,33 +17,30 @@ PYTHON_INTERPRETER = python
 #################################################################################
 
 ## Set up python interpreter environment
-create_environment:
-	conda create --name $(PROJECT_NAME) python=$(PYTHON_VERSION) --no-default-packages -y
-
-## Install Python Dependencies
-requirements:
-	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel
-	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
-	$(PYTHON_INTERPRETER) -m pip install -e .
-
-## Install Developer Python Dependencies
-dev_requirements: requirements
-	$(PYTHON_INTERPRETER) -m pip install .["dev"]
+conda_environment:
+	conda env create --file environment.yaml && \
+	conda run -n mlops_env pip install -r requirements.txt && \
+	conda run -n mlops_env pip install -r requirements_dev.txt && \
+	echo 'Conda env ready, activate it with conda activate mlops_env'
 
 ## Delete all compiled Python files
 clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
-## Get the data
-raw_data:
+## Get the data from dvc pull
+pull_data:
+	dvc pull
+
+## Get the data from the repo with script
+get_data:
 	python $(PROJECT_NAME)/data/make_dataset.py
 
 ## Train the model
 train:
 	python $(PROJECT_NAME)/train_model.py --config=mlops_project/config/config-defaults.yaml
 
-## Run the api
+## Run the api locally
 api:
 	uvicorn --port 8000 api.main:app
 

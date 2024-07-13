@@ -69,6 +69,12 @@ Currently large language models has the state-of-the-art results for most NLP ta
     └── utils_functions.py
 ```
 
+## Conda environment
+To create conda environment with the requirements of this repository, simply use
+```bash
+make conda_environment
+```
+
 ## Dataset
 To get the dataset and trained model weights, use
 ```bash

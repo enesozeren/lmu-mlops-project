@@ -1,5 +1,5 @@
 program: train_model.py
-name: sweep_XXX # Change sweep name
+name: sweep_best # Change sweep name
 method: grid
 metric:
   goal: minimize
@@ -8,6 +8,6 @@ parameters:
   BATCH_SIZE:
     values: [16]
   EPOCHS:
-    values: [5]
+    values: [7]
   LEARNING_RATE:
     values: [0.000005]

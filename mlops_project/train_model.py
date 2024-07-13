@@ -27,6 +27,12 @@ val_labels = torch.tensor(val_labels)
 train_set = TensorDataset(train_token_ids, train_attention_masks, train_labels)
 val_set = TensorDataset(val_token_ids, val_attention_masks, val_labels)
 
+CLOUD_BUCKET = "data_bucket_lmu"
+checkpoint_path = (
+    os.path.join("/gcs", CLOUD_BUCKET, "checkpoints")
+    if os.path.exists("/gcs/data_bucket_lmu/")
+    else "mlops_project/checkpoints"
+)
 
 # Reproducibility
 seed_everything(47, workers=True)
@@ -62,6 +68,7 @@ def main():
     train_dataloader = DataLoader(
         train_set,
         worker_init_fn=seed_worker,
+        num_workers=7,
         generator=g,
         sampler=RandomSampler(train_set),
         batch_size=wandb.config.BATCH_SIZE,
@@ -69,6 +76,7 @@ def main():
     validation_dataloader = DataLoader(
         val_set,
         worker_init_fn=seed_worker,
+        num_workers=7,
         generator=g,
         sampler=SequentialSampler(val_set),
         batch_size=wandb.config.BATCH_SIZE,
@@ -78,7 +86,7 @@ def main():
     model = HatespeechModel(wandb.config.LEARNING_RATE)
 
     checkpoint_callback = ModelCheckpoint(
-        monitor="val_loss", dirpath="mlops_project/checkpoints", filename="best-checkpoint", save_top_k=1, mode="min"
+        monitor="val_loss", dirpath=checkpoint_path, filename="best-checkpoint", save_top_k=1, mode="min"
     )
     # early_stopping_callback = EarlyStopping(monitor="val_loss", patience=3, verbose=True, mode="min")
 
@@ -97,12 +105,7 @@ def main():
     # Train the model
     trainer.fit(model, train_dataloader, validation_dataloader)
     # save best model as model weights
-    CLOUD_BUCKET = "data_bucket_lmu"
-    checkpoint_path = (
-        os.path.join("/gcs", CLOUD_BUCKET, "checkpoints")
-        if os.path.exists("/gcs/data_bucket_lmu/")
-        else "mlops_project/checkpoints"
-    )
+
     checkpoint = torch.load(os.path.join(checkpoint_path, "best-checkpoint.ckpt"))
     state = {key[6:]: value for key, value in checkpoint["state_dict"].items()}
     weight_path = os.path.join(checkpoint_path, "best-checkpoint.pth")

@@ -26,7 +26,8 @@ def predict(model_path: str, dataset_path: str) -> None:
     )
 
     # Load the model weights
-    model.load_state_dict(torch.load(model_path))
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model.load_state_dict(torch.load(model_path, map_location=device))
     model.eval()
 
     # Set the device to GPU if available

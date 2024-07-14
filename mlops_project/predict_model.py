@@ -17,17 +17,18 @@ def predict(model_path: str, dataset_path: str) -> None:
         Tensor of shape [N, d] where N is the number of samples and d is the output dimension of the model
     """
 
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     # Load the tokenizer
     tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 
     # Load the model
     model = BertForSequenceClassification.from_pretrained(
-        "bert-base-uncased", num_labels=2, output_attentions=False, output_hidden_states=False
+        "bert-base-uncased",
+        num_labels=2,
+        output_attentions=False,
+        output_hidden_states=False,
+        state_dict=torch.load(model_path, map_location=device),
     )
-
-    # Load the model weights
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model.load_state_dict(torch.load(model_path, map_location=device))
     model.eval()
 
     # Read the dataset

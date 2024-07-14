@@ -86,7 +86,7 @@ Note: You need GCP bucket permissions to be able to run this command
 Predictions from this script are saved to outputs directory. To make a prediction, use
 ```bash
 python mlops_project/predict_model.py \
---model_path=/your/model/path.txt \
+--model_path=/your/model/path.pth \
 --dataset_path=/your/data/path.txt
 ```
 
@@ -137,11 +137,18 @@ docker run -p 8080:8080 -e PORT=8080 inference_api:latest
 
 You can also use the predict_model docker image by mounting with your machine for your model weights and dataset
 ```bash
-docker run -v /home/user/models:/container/models \
-           -v /home/user/data:/container/data \
+docker run -v /to/your/model/weight/path/best-checkpoint.pth:/container/models/best-checkpoint.pth \
+           -v /to/your/test_path/test_text.txt:/container/data/test_text.txt \
+           -v /to/your/outputs/predictions:/lmu-mlops-project/outputs/predictions \
            predict_model:latest \
-           --model_path /container/models/model.pth \
+           --model_path /container/models/best-checkpoint.pth \
            --dataset_path /container/data/test_text.txt
+```
+
+To run training docker container use:
+```bash
+docker run -e WANDB_API_KEY=your_wandb_api_key \
+train_model:latest --config=mlops_project/config/config-defaults.yaml
 ```
 
 ## Tests

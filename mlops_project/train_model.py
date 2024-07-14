@@ -68,7 +68,6 @@ def main():
     train_dataloader = DataLoader(
         train_set,
         worker_init_fn=seed_worker,
-        num_workers=7,
         generator=g,
         sampler=RandomSampler(train_set),
         batch_size=wandb.config.BATCH_SIZE,
@@ -76,7 +75,6 @@ def main():
     validation_dataloader = DataLoader(
         val_set,
         worker_init_fn=seed_worker,
-        num_workers=7,
         generator=g,
         sampler=SequentialSampler(val_set),
         batch_size=wandb.config.BATCH_SIZE,

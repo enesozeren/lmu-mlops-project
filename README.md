@@ -145,6 +145,12 @@ docker run -v /to/your/model/weight/path/best-checkpoint.pth:/container/models/b
            --dataset_path /container/data/test_text.txt
 ```
 
+To run training docker container use:
+```bash
+docker run -e WANDB_API_KEY=your_wandb_api_key \
+train_model:latest --config=mlops_project/config/config-defaults.yaml
+```
+
 ## Tests
 
 Unit tests for this repo can be found in the ``tests/`` directory.

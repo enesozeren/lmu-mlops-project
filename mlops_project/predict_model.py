@@ -30,10 +30,6 @@ def predict(model_path: str, dataset_path: str) -> None:
     model.load_state_dict(torch.load(model_path, map_location=device))
     model.eval()
 
-    # Set the device to GPU if available
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model.to(device)
-
     # Read the dataset
     tweets, _ = read_dataset(dataset_path)
 

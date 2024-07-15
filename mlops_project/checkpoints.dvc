@@ -5,3 +5,7 @@ outs:
   - relpath: best-checkpoint.pth
     md5: b6da8aa63eec9f71e14b2e20385cd725
     size: 438004360
+    cloud:
+      gcloud:
+        etag: 089798b6fae3a887031001
+        version_id: '1721037407226903'

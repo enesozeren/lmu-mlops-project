@@ -9,4 +9,4 @@ workerPoolSpecs:
     env:
       - name: WANDB_API_KEY
         value: $WANDB_API_KEY
-    args: ["--config", "config/config-defaults.yaml"]
+    args: ["--config", "mlops_project/config/config-defaults.yaml"]

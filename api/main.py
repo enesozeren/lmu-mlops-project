@@ -12,18 +12,19 @@ MODEL_PATH = os.path.join("mlops_project", "checkpoints", "best-checkpoint.pth")
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Load and clean up model on startup and shutdown."""
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     # Load the tokenizer
     tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 
-    # Get the model from the saved checkpoint
-
+    # Load the model
     model = BertForSequenceClassification.from_pretrained(
-        "bert-base-uncased", num_labels=2, output_attentions=False, output_hidden_states=False
+        "bert-base-uncased",
+        num_labels=2,
+        output_attentions=False,
+        output_hidden_states=False,
+        state_dict=torch.load(MODEL_PATH, map_location=device),
     )
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
     model.eval()
-    model.to(device)
 
     # Set the model and tokenizer in the app state
     app.state.tokenizer = tokenizer

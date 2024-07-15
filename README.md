@@ -128,6 +128,16 @@ To build the docker image for inference api, use
 docker build -f dockerfiles/inference_api.dockerfile . -t inference_api:latest
 ```
 
+To build the docker image for prediction, use
+```bash
+docker build -f dockerfiles/predict_model.dockerfile . -t predict_model:latest
+```
+
+To build the docker image for training, use
+```bash
+docker build -f dockerfiles/train_model.dockerfile . -t train_model:latest
+```
+
 ### Running Docker Containers
 
 To run the docker image for inference api, use
